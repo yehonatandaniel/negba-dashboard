@@ -1621,19 +1621,18 @@ setInterval(loadData, 5 * 60 * 1000);
 // ============================================================
 // NEGBA AI ENGINE — Claude API calls
 // ============================================================
-
+const ANTHROPIC_API_KEY = "sk-ant-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";
 const CLAUDE_MODEL = "claude-sonnet-4-20250514";
-
+llClaudeAPI
 async function callClaudeAPI(systemPrompt, userPrompt) {
   try {
     const res = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: CLAUDE_MODEL,
-        max_tokens: 1000,
-        system: systemPrompt,
-        messages: [{ role: "user", content: userPrompt }]
+"Content-Type": "application/json",
+"x-api-key": ANTHROPIC_API_KEY,
+"anthropic-version": "2023-06-01",
+"anthropic-dangerous-direct-browser-access": "true"
+},
       })
     });
     const data = await res.json();
