@@ -1868,8 +1868,8 @@ ${otherFamilies || 'אין עדיין'}
 
 // ── Community Intelligence ──
 async function runCommunityIntelligence() {
-  const btn = document.getElementById('ciRunBtn');
-  const content = document.getElementById('ciContent');
+  const btn = document.getElementById('insightsBtn');
+  const content = document.getElementById('insightsContent');
   btn.textContent = 'מנתח...';
   btn.disabled = true;
 
@@ -1938,7 +1938,7 @@ ${familySummaries}
 }
 
 function renderCommunityIntelligence(data, families) {
-  const content = document.getElementById('ciContent');
+  const content = document.getElementById('insightsContent');
 
   // Insights
   let html = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px">';
