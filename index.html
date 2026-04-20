@@ -828,7 +828,7 @@
   <div class="card grid-full">
     <div class="card-title" style="display:flex;align-items:center;justify-content:space-between">
       <span>✦ תובנות קהילה — מודל נגבה</span>
-      <button onclick="runCommunityIntelligence()" id="insightsBtn" style="padding:7px 16px;background:var(--text);color:white;border:none;border-radius:6px;font-family:Heebo,sans-serif;font-size:12px;cursor:pointer;opacity:0.85" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.85">הפעל ניתוח AI</button>
+      <button onclick="runInsights()" id="insightsBtn" style="padding:7px 16px;background:var(--text);color:white;border:none;border-radius:6px;font-family:Heebo,sans-serif;font-size:12px;cursor:pointer;opacity:0.85" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.85">הפעל ניתוח AI</button>
     </div>
     <div id="insightsContent">
       <div style="text-align:center;padding:40px;color:var(--muted2);font-size:13px">לחץ "הפעל ניתוח AI" לקבלת תובנות על הקהילה</div>
@@ -1772,16 +1772,13 @@ const CLAUDE_MODEL = "claude-sonnet-4-20250514";
 
 async function callClaudeAPI(systemPrompt, userPrompt) {
   try {
-    const res = await fetch(API_URL, {
-      method: "POST",
-headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 1000,
-        system: systemPrompt,
-        messages: [{ role: "user", content: userPrompt }]
-      })
-    });
+    const body = {
+      model: "claude-sonnet-4-20250514",
+      max_tokens: 1000,
+      system: systemPrompt,
+      messages: [{ role: "user", content: userPrompt }]
+    };
+    const res = await fetch(API_URL + "&prompt=" + encodeURIComponent(JSON.stringify(body)));
     const data = await res.json();
     if (data.error) { console.error("Claude error:", data.error); return null; }
     return data.content?.[0]?.text || null;
@@ -1871,8 +1868,8 @@ ${otherFamilies || 'אין עדיין'}
 
 // ── Community Intelligence ──
 async function runCommunityIntelligence() {
-  const btn = document.getElementById('insightsBtn');
-  const content = document.getElementById('insightsContent');
+  const btn = document.getElementById('ciRunBtn');
+  const content = document.getElementById('ciContent');
   btn.textContent = 'מנתח...';
   btn.disabled = true;
 
