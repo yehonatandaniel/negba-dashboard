@@ -1768,13 +1768,13 @@ setInterval(loadData, 5 * 60 * 1000);
 // NEGBA AI ENGINE — Claude API calls
 // ============================================================
 
-const CLAUDE_MODEL = "claude-sonnet-4-20250514";
+const CLAUDE_MODEL = "claude-sonnet-4-5";
 
 async function callClaudeAPI(systemPrompt, userPrompt) {
   try {
     const WORKER_URL = "https://flat-bonus-7705.yehonatan-daniel.workers.dev";
     const body = {
-      model: "claude-sonnet-4-20250514",
+      model: "claude-sonnet-4-5",
       max_tokens: 1000,
       system: systemPrompt,
       messages: [{ role: "user", content: userPrompt }]
