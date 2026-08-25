@@ -7,94 +7,38 @@
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #f5f3ef;
-    --surface: #ffffff;
-    --surface2: #f0ede8;
-    --border: #e2ddd6;
-    --text: #1a1814;
-    --muted: #8a8278;
-    --muted2: #b5b0a8;
-
-    --core:      #2d6a4f;
-    --lifestyle: #6b8f71;
-    --quiet:     #c9854a;
-    --indie:     #9b3a2a;
-
-    --core-bg:      #eaf3ee;
-    --lifestyle-bg: #eef3ef;
-    --quiet-bg:     #fdf0e6;
-    --indie-bg:     #fcecea;
+    --bg: #f5f3ef; --surface: #ffffff; --surface2: #f0ede8; --border: #e2ddd6;
+    --text: #1a1814; --muted: #8a8278; --muted2: #b5b0a8;
+    --core: #2d6a4f; --lifestyle: #6b8f71; --quiet: #c9854a; --indie: #9b3a2a;
+    --core-bg: #eaf3ee; --lifestyle-bg: #eef3ef; --quiet-bg: #fdf0e6; --indie-bg: #fcecea;
   }
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Heebo', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; direction: rtl; }
 
-  body {
-    font-family: 'Heebo', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    direction: rtl;
-  }
-
-  header {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 0 48px;
-    height: 64px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-
+  header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; height: 64px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
   .logo { display: flex; align-items: baseline; gap: 10px; }
   .logo-mark { font-size: 20px; font-weight: 900; color: var(--core); letter-spacing: -1px; }
   .logo-sub { font-size: 12px; color: var(--muted); font-weight: 400; letter-spacing: 2px; text-transform: uppercase; }
 
   main { padding: 36px 48px; max-width: 1000px; margin: 0 auto; }
 
-  .section-label {
-    font-size: 10px; font-weight: 700; letter-spacing: 2.5px;
-    text-transform: uppercase; color: var(--muted2); margin-bottom: 14px;
-  }
-
-  /* TABS */
   .tabs { display: flex; gap: 6px; margin-bottom: 24px; border-bottom: 1px solid var(--border); }
-  .tab-btn {
-    padding: 10px 4px; margin-left: 24px; background: none; border: none;
-    font-family: 'Heebo', sans-serif; font-size: 14px; font-weight: 600;
-    color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent;
-    margin-bottom: -1px; transition: color .15s, border-color .15s;
-  }
+  .tab-btn { padding: 10px 4px; margin-left: 24px; background: none; border: none; font-family: 'Heebo', sans-serif; font-size: 14px; font-weight: 600; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: color .15s, border-color .15s; }
   .tab-btn.active { color: var(--core); border-bottom-color: var(--core); }
   .tab-btn:hover:not(.active) { color: var(--text); }
 
-  .card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 10px; padding: 24px 28px; margin-bottom: 14px;
-  }
-  .card-title {
-    font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase;
-    letter-spacing: 2px; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid var(--border);
-  }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 24px 28px; margin-bottom: 14px; }
+  .card-title { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
 
-  .profile-badge {
-    display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px;
-    border-radius: 20px; font-size: 11px; font-weight: 700; white-space: nowrap;
-  }
-  .badge-core      { background: var(--core-bg); color: var(--core); }
+  .profile-badge { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+  .badge-core { background: var(--core-bg); color: var(--core); }
   .badge-lifestyle { background: var(--lifestyle-bg); color: var(--lifestyle); }
-  .badge-quiet     { background: var(--quiet-bg); color: var(--quiet); }
-  .badge-indie     { background: var(--indie-bg); color: var(--indie); }
+  .badge-quiet { background: var(--quiet-bg); color: var(--quiet); }
+  .badge-indie { background: var(--indie-bg); color: var(--indie); }
   .badge-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
 
   .leads-table { width: 100%; border-collapse: collapse; }
-  .leads-table th {
-    text-align: right; font-size: 10px; color: var(--muted2); text-transform: uppercase;
-    letter-spacing: 1.5px; padding: 0 14px 12px; border-bottom: 1px solid var(--border); font-weight: 600;
-  }
+  .leads-table th { text-align: right; font-size: 10px; color: var(--muted2); text-transform: uppercase; letter-spacing: 1.5px; padding: 0 14px 12px; border-bottom: 1px solid var(--border); font-weight: 600; }
   .leads-table td { padding: 13px 14px; font-size: 13px; border-bottom: 1px solid var(--border); vertical-align: middle; }
   .leads-table tr:last-child td { border-bottom: none; }
   .leads-table tbody tr { cursor: pointer; }
@@ -112,42 +56,40 @@
   .match-track { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; margin-bottom: 10px; }
   .match-fill { height: 100%; border-radius: 2px; transition: width .8s ease; }
   .tag-chip { display: inline-block; font-size: 11px; padding: 4px 10px; border-radius: 20px; font-weight: 600; margin: 0 4px 4px 0; }
-  .tag-chip-on  { background: var(--core-bg); color: var(--core); }
+  .tag-chip-on { background: var(--core-bg); color: var(--core); }
   .tag-chip-off { background: var(--surface); color: var(--muted2); border: 1px solid var(--border); }
   .budget-note { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); margin-top: 8px; }
 
-  .drawer-overlay { position: fixed; inset: 0; background: rgba(26,24,20,0.3); z-index: 200; display: none; backdrop-filter: blur(2px); }
-  .drawer-overlay.open { display: block; }
-  .drawer { position: fixed; top: 64px; right: 0; bottom: 0; width: 380px; background: var(--surface); border-left: 1px solid var(--border); z-index: 201; transform: translateX(100%); transition: transform .32s cubic-bezier(0.4,0,0.2,1); overflow-y: auto; direction: rtl; }
-  .drawer.open { transform: translateX(0); }
-  .drawer-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px 16px; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--surface); z-index: 1; }
-  .drawer-header-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--core); }
-  .drawer-close { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface2); cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; color: var(--muted); }
-  .drawer-close:hover { background: var(--border); }
-  .drawer-body { padding: 22px 24px; }
-  .drawer-name { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
-  .drawer-meta { font-size: 12px; color: var(--muted2); margin-bottom: 20px; }
-  .drawer-kpis { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 22px; }
-  .drawer-kpi { background: var(--surface2); border-radius: 8px; padding: 10px 12px; }
-  .drawer-kpi-label { font-size: 9px; color: var(--muted2); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; }
-  .drawer-kpi-value { font-size: 12px; font-weight: 700; color: var(--text); }
-  .drawer-slabel { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted2); margin-bottom: 10px; }
-
-  .tag-item { border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; overflow: hidden; }
-  .tag-item-head { display: flex; align-items: center; justify-content: space-between; padding: 11px 13px; cursor: pointer; }
-  .tag-item-title { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; }
-  .tag-item-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-  .dot-stated  { background: var(--core); }
-  .dot-inferred{ background: var(--quiet); }
-  .src-pill { font-size: 10px; padding: 2px 8px; border-radius: 20px; font-weight: 700; }
-  .src-stated  { background: var(--core-bg); color: var(--core); }
-  .src-inferred{ background: var(--quiet-bg); color: var(--quiet); }
-  .tag-item-body { padding: 0 13px 13px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); }
-  .tag-evidence { padding-top: 10px; }
-  .tag-angle { background: var(--core-bg); border-radius: 8px; padding: 10px 12px; margin-top: 8px; color: var(--text); line-height: 1.6; }
-  .chev { transition: transform .15s; }
-  .chev.open { transform: rotate(180deg); }
-
+  /* ── copied verbatim from the live dashboard's bs-panel ── */
+  .bs-overlay { position:fixed;inset:0;background:rgba(26,24,20,0.3);z-index:200;display:none;backdrop-filter:blur(2px); }
+  .bs-overlay.open { display:block; }
+  .bs-panel { position:fixed;top:64px;right:0;bottom:0;width:380px;background:var(--surface);border-left:1px solid var(--border);z-index:201;transform:translateX(100%);transition:transform .32s cubic-bezier(0.4,0,0.2,1);overflow-y:auto;direction:rtl; }
+  .bs-panel.open { transform:translateX(0); }
+  .bs-ph { display:flex;align-items:center;justify-content:space-between;padding:20px 24px 16px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--surface);z-index:1; }
+  .bs-ph-label { font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--core); }
+  .bs-close { width:28px;height:28px;border-radius:50%;border:1px solid var(--border);background:var(--surface2);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;color:var(--muted); }
+  .bs-close:hover { background:var(--border); }
+  .bs-body { padding:22px 24px; }
+  .bs-name { font-size:18px;font-weight:700;color:var(--text);margin-bottom:3px; }
+  .bs-meta { font-size:12px;color:var(--muted2);margin-bottom:20px; }
+  .bs-ring-area { display:flex;flex-direction:column;align-items:center;margin-bottom:18px; }
+  .bs-score-lbl { font-size:13px;font-weight:600;margin-top:6px; }
+  .bs-renewal-row { display:flex;justify-content:center;margin-bottom:20px; }
+  .bs-renewal-badge { font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 14px;border-radius:99px; }
+  .bs-slabel { font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted2);margin-bottom:10px; }
+  .bs-axis-row { display:flex;align-items:center;gap:8px;margin-bottom:9px; }
+  .bs-axis-icon { font-size:13px;width:18px;text-align:center;flex-shrink:0; }
+  .bs-axis-body { flex:1; }
+  .bs-axis-top { display:flex;justify-content:space-between;margin-bottom:3px; }
+  .bs-axis-name { font-size:11px;color:var(--text); }
+  .bs-axis-val { font-size:11px;color:var(--muted2); }
+  .bs-track { height:4px;background:var(--surface2);border-radius:99px;overflow:hidden; }
+  .bs-fill { height:100%;border-radius:99px;transition:width .85s cubic-bezier(0.4,0,0.2,1); }
+  .bs-divider { height:1px;background:var(--border);margin:18px 0; }
+  .bs-ai-box { background:var(--surface2);border-right:3px solid var(--core);border-radius:0 8px 8px 0;padding:12px 14px;font-size:12px;line-height:1.75;color:var(--muted); }
+  .bs-ans-item { margin-bottom:9px;padding:9px 12px;background:var(--surface2);border-radius:7px; }
+  .bs-ans-q { font-size:10px;font-weight:600;color:var(--muted2);margin-bottom:2px; }
+  .bs-ans-a { font-size:12px;color:var(--text);line-height:1.5; }
   .matching-note { border: 1px dashed var(--border); border-radius: 8px; padding: 12px 14px; margin-top: 18px; }
 </style>
 </head>
@@ -189,20 +131,47 @@
   </div>
 </main>
 
-<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
-<div class="drawer" id="drawer">
-  <div class="drawer-header">
-    <span class="drawer-header-label">תגיות עומק לשיחת מכירה</span>
-    <button class="drawer-close" onclick="closeDrawer()">✕</button>
+<div class="bs-overlay" id="bsOverlay" onclick="closeDrawer()"></div>
+<div class="bs-panel" id="bsPanel">
+  <div class="bs-ph">
+    <span class="bs-ph-label">תגיות עומק לשיחת מכירה</span>
+    <button class="bs-close" onclick="closeDrawer()">✕</button>
   </div>
-  <div class="drawer-body">
-    <p class="drawer-name" id="drawerName"></p>
-    <p class="drawer-meta" id="drawerMeta"></p>
-    <div class="drawer-kpis" id="drawerKpis"></div>
-    <div class="drawer-slabel">תגיות</div>
-    <div id="drawerTags"></div>
+  <div class="bs-body">
+    <p class="bs-name" id="drawerName"></p>
+    <p class="bs-meta" id="drawerMeta"></p>
+
+    <div class="bs-ring-area">
+      <svg id="ring" width="140" height="140" viewBox="0 0 140 140">
+        <circle cx="70" cy="70" r="56" fill="none" stroke="var(--surface2)" stroke-width="10"/>
+        <circle id="ringFill" cx="70" cy="70" r="56" fill="none" stroke="var(--core)"
+          stroke-width="10" stroke-linecap="round"
+          stroke-dasharray="351.86" stroke-dashoffset="351.86"
+          transform="rotate(-90 70 70)"
+          style="transition:stroke-dashoffset 1s cubic-bezier(0.4,0,0.2,1)"/>
+        <text id="ringScoreTxt" x="70" y="68" text-anchor="middle" font-size="28" font-weight="700"
+          font-family="Heebo,sans-serif" fill="var(--text)">0</text>
+        <text x="70" y="85" text-anchor="middle" font-size="11" font-family="Heebo,sans-serif" fill="var(--muted2)">/100</text>
+      </svg>
+      <p class="bs-score-lbl" id="ringLbl"></p>
+    </div>
+
+    <div class="bs-renewal-row">
+      <span class="bs-renewal-badge" id="readinessBadge"></span>
+    </div>
+
+    <div class="bs-slabel">תגיות עומק</div>
+    <div id="drawerAxes"></div>
+
+    <div class="bs-divider"></div>
+
+    <div class="bs-slabel" style="margin-bottom:10px">תמצית לשיחת מכירה</div>
+    <div class="bs-ai-box" id="drawerAiBox"></div>
+
+    <div style="margin-top:16px" id="drawerEvidence"></div>
+
     <div class="matching-note">
-      <div class="drawer-slabel" style="margin-bottom:6px">נשמר להתאמות עתידיות</div>
+      <div class="bs-slabel" style="margin-bottom:6px">נשמר להתאמות עתידיות</div>
       <div style="font-size:12px;color:var(--muted);line-height:1.6" id="drawerNotes"></div>
     </div>
   </div>
@@ -213,7 +182,8 @@ const mockLeads = [
   {
     id: 'LEAD_2201', name: 'משפחת כהן', householdType: 'זוג עם ילדים', kidsAges: [4, 10],
     profileMatch: 'Core Community', badgeClass: 'badge-core',
-    readinessStage: 'מחפשים באופן פעיל', budgetRangeMillion: [3, 4], locations: ['רעננה'],
+    readinessStage: 'מחפשים באופן פעיל', readinessTier: 'high',
+    budgetRangeMillion: [3, 4], locations: ['רעננה'],
     tags: [
       { tag: 'חינוך יסודי', sourceType: 'inferred', evidence: 'ילד בגיל 10', salesAngle: 'בית הספר היסודי באזור נחשב טוב ובמרחק הליכה בטוחה' },
       { tag: 'חינוך גיל רך - גן', sourceType: 'inferred', evidence: 'ילד בגיל 4', salesAngle: 'יש גני ילדים איכותיים במרחק הליכה' },
@@ -225,7 +195,8 @@ const mockLeads = [
   {
     id: 'LEAD_2214', name: 'משפחת לוי', householdType: 'זוג עם ילדים', kidsAges: [15],
     profileMatch: 'Independent Urbanists', badgeClass: 'badge-indie',
-    readinessStage: 'מתעניינים ומתחילים לבדוק', budgetRangeMillion: [4, 5], locations: ['רעננה'],
+    readinessStage: 'מתעניינים ומתחילים לבדוק', readinessTier: 'med',
+    budgetRangeMillion: [4, 5], locations: ['רעננה'],
     tags: [
       { tag: 'תיכון', sourceType: 'inferred', evidence: 'ילד/ה בגיל 15', salesAngle: 'תיכון איכותי בסביבה, רלוונטי גם לטווח הארוך' },
       { tag: 'רגישות גבוהה לשקט', sourceType: 'stated', evidence: 'בחר/ה "שקט ופרטיות" כמה שהכי גורם להרגיש בבית', salesAngle: 'הבניין כולו מוגדר כשקט - שווה לפתוח איתו' },
@@ -235,7 +206,8 @@ const mockLeads = [
   {
     id: 'LEAD_2233', name: 'משפחת אזולאי', householdType: 'זוג עם ילדים', kidsAges: [8],
     profileMatch: 'Quiet Belongers', badgeClass: 'badge-quiet',
-    readinessStage: 'מחכים להזדמנות הנכונה', budgetRangeMillion: [2, 3], locations: ['רעננה'],
+    readinessStage: 'מחכים להזדמנות הנכונה', readinessTier: 'low',
+    budgetRangeMillion: [2, 3], locations: ['רעננה'],
     tags: [
       { tag: 'חינוך יסודי', sourceType: 'inferred', evidence: 'ילד בגיל 8', salesAngle: 'בית ספר יסודי במרחק הליכה בטוחה' },
       { tag: 'צורך באחסון', sourceType: 'stated', evidence: 'בחר/ה "חדרי אחסון / ציוד" כמרחב חשוב', salesAngle: 'יש מחסן צמוד לכל דירה בפרויקט' },
@@ -255,6 +227,14 @@ const mockProject = {
   ],
 };
 
+const RING_COLORS = { high: '#2d6a4f', med: '#c9854a', low: '#9b3a2a' };
+const READINESS_CFG = {
+  high: { bg: 'var(--core-bg)', color: 'var(--core)' },
+  med:  { bg: 'var(--quiet-bg)', color: 'var(--warn, var(--quiet))' },
+  low:  { bg: 'var(--indie-bg)', color: 'var(--indie)' },
+};
+const CERTAINTY_LABEL = { high: 'פרופיל מאומת ברובו', med: 'פרופיל מעורב', low: 'פרופיל מוערך ברובו' };
+
 const projectMatchableTags = new Set(mockProject.attributes.flatMap(a => a.matchesLeadTags));
 
 function computeMatch(lead) {
@@ -266,6 +246,14 @@ function computeMatch(lead) {
   return { matched, unmatched: tagNames.filter(t => !matched.includes(t)), budgetOk, finalScore };
 }
 
+// certainty = % of tags that are directly stated (vs inferred) — a real, meaningful metric
+function computeCertainty(lead) {
+  const stated = lead.tags.filter(t => t.sourceType === 'stated').length;
+  const score = Math.round((stated / lead.tags.length) * 100);
+  const tier = score >= 70 ? 'high' : score >= 40 ? 'med' : 'low';
+  return { score, tier };
+}
+
 function switchTab(tab) {
   document.getElementById('tabLeadsBtn').classList.toggle('active', tab === 'leads');
   document.getElementById('tabProjectBtn').classList.toggle('active', tab === 'project');
@@ -274,8 +262,7 @@ function switchTab(tab) {
 }
 
 function renderLeadsTable() {
-  const tbody = document.getElementById('leadsBody');
-  tbody.innerHTML = mockLeads.map(l => `
+  document.getElementById('leadsBody').innerHTML = mockLeads.map(l => `
     <tr onclick="openDrawer('${l.id}')">
       <td><strong>${l.name}</strong><span class="name-hint">${l.tags.length} תגיות עומק</span></td>
       <td style="color:var(--muted);font-size:12px">${l.householdType}</td>
@@ -309,13 +296,7 @@ function renderProjectView() {
   }).join('');
 }
 
-function toggleTagItem(idx) {
-  const body = document.getElementById('tagBody' + idx);
-  const chev = document.getElementById('tagChev' + idx);
-  const isOpen = body.style.display === 'block';
-  body.style.display = isOpen ? 'none' : 'block';
-  chev.classList.toggle('open', !isOpen);
-}
+let ringAnimTimer = null;
 
 function openDrawer(id) {
   const lead = mockLeads.find(l => l.id === id);
@@ -325,39 +306,79 @@ function openDrawer(id) {
   document.getElementById('drawerMeta').textContent = lead.householdType +
     (lead.kidsAges.length ? ` · ילדים בגילאי ${lead.kidsAges.join(', ')}` : '');
 
-  document.getElementById('drawerKpis').innerHTML = `
-    <div class="drawer-kpi"><div class="drawer-kpi-label">תקציב</div><div class="drawer-kpi-value">${lead.budgetRangeMillion[0]}-${lead.budgetRangeMillion[1]}M</div></div>
-    <div class="drawer-kpi"><div class="drawer-kpi-label">מוכנות</div><div class="drawer-kpi-value">${lead.readinessStage}</div></div>
-    <div class="drawer-kpi"><div class="drawer-kpi-label">אזור</div><div class="drawer-kpi-value">${lead.locations[0]}</div></div>`;
+  // Ring: % of tags that are directly stated (certainty of this profile)
+  const { score, tier } = computeCertainty(lead);
+  const circ = 2 * Math.PI * 56;
+  const rf = document.getElementById('ringFill');
+  const st = document.getElementById('ringScoreTxt');
+  rf.style.transition = 'none';
+  rf.setAttribute('stroke-dashoffset', circ);
+  rf.setAttribute('stroke', RING_COLORS[tier]);
+  st.setAttribute('fill', RING_COLORS[tier]);
+  st.textContent = '0';
+  if (ringAnimTimer) cancelAnimationFrame(ringAnimTimer);
+  let start = null;
+  function anim(ts) {
+    if (!start) start = ts;
+    const p = Math.min((ts - start) / 900, 1);
+    const e = 1 - Math.pow(1 - p, 3);
+    const cur = Math.round(e * score);
+    st.textContent = cur;
+    rf.setAttribute('stroke-dashoffset', circ - (cur / 100) * circ);
+    if (p < 1) ringAnimTimer = requestAnimationFrame(anim);
+  }
+  setTimeout(() => requestAnimationFrame(anim), 80);
+  document.getElementById('ringLbl').textContent = CERTAINTY_LABEL[tier];
+  document.getElementById('ringLbl').style.color = RING_COLORS[tier];
 
-  document.getElementById('drawerTags').innerHTML = lead.tags.map((t, i) => {
+  const rc = READINESS_CFG[lead.readinessTier];
+  const rb = document.getElementById('readinessBadge');
+  rb.textContent = lead.readinessStage;
+  rb.style.background = rc.bg;
+  rb.style.color = rc.color;
+
+  // Axes — one row per tag; full bar = stated, partial bar = inferred
+  document.getElementById('drawerAxes').innerHTML = lead.tags.map(t => {
     const stated = t.sourceType === 'stated';
+    const pct = stated ? 100 : 60;
+    const color = stated ? 'var(--core)' : 'var(--quiet)';
     return `
-      <div class="tag-item">
-        <div class="tag-item-head" onclick="toggleTagItem(${i})">
-          <div class="tag-item-title">
-            <span class="tag-item-dot ${stated ? 'dot-stated' : 'dot-inferred'}"></span>
-            ${t.tag}
-            <span class="src-pill ${stated ? 'src-stated' : 'src-inferred'}">${stated ? 'נאמר' : 'מוערך'}</span>
+      <div class="bs-axis-row">
+        <span class="bs-axis-icon">${stated ? '●' : '◐'}</span>
+        <div class="bs-axis-body">
+          <div class="bs-axis-top">
+            <span class="bs-axis-name">${t.tag}</span>
+            <span class="bs-axis-val">${stated ? 'נאמר' : 'מוערך'}</span>
           </div>
-          <span class="chev" id="tagChev${i}">▾</span>
-        </div>
-        <div class="tag-item-body" id="tagBody${i}" style="display:none">
-          <div class="tag-evidence"><strong style="color:var(--text)">מבוסס על:</strong> ${t.evidence}</div>
-          <div class="tag-angle">${t.salesAngle}</div>
+          <div class="bs-track"><div class="bs-fill" data-pct="${pct}" style="background:${color};width:0%"></div></div>
         </div>
       </div>`;
   }).join('');
+  setTimeout(() => {
+    document.querySelectorAll('#drawerAxes [data-pct]').forEach(el => { el.style.width = el.dataset.pct + '%'; });
+  }, 120);
+
+  // AI box — combined sales angles
+  document.getElementById('drawerAiBox').innerHTML = lead.tags.map(t => `• ${t.salesAngle}`).join('<br><br>');
+
+  // Evidence list — same pattern as "תשובות מהשאלון"
+  document.getElementById('drawerEvidence').innerHTML =
+    `<div class="bs-slabel">מבוסס על</div>` +
+    lead.tags.map(t => `
+      <div class="bs-ans-item">
+        <div class="bs-ans-q">${t.tag}</div>
+        <div class="bs-ans-a">${t.evidence}</div>
+      </div>`).join('');
 
   document.getElementById('drawerNotes').textContent = lead.notesForMatching;
 
-  document.getElementById('drawerOverlay').classList.add('open');
-  document.getElementById('drawer').classList.add('open');
+  document.getElementById('bsOverlay').classList.add('open');
+  document.getElementById('bsPanel').classList.add('open');
 }
 
 function closeDrawer() {
-  document.getElementById('drawerOverlay').classList.remove('open');
-  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('bsOverlay').classList.remove('open');
+  document.getElementById('bsPanel').classList.remove('open');
 }
 
 renderLeadsTable();
