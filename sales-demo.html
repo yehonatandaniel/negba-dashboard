@@ -3,29 +3,217 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Negba | תצוגת מכירות</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-<script src="https://unpkg.com/lucide@latest"></script>
-<style>body { background:#F8F9FA; padding: 24px 12px; }</style>
+<title>נגבה | תצוגת מכירות</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f3ef;
+    --surface: #ffffff;
+    --surface2: #f0ede8;
+    --border: #e2ddd6;
+    --text: #1a1814;
+    --muted: #8a8278;
+    --muted2: #b5b0a8;
+
+    --core:      #2d6a4f;
+    --lifestyle: #6b8f71;
+    --quiet:     #c9854a;
+    --indie:     #9b3a2a;
+
+    --core-bg:      #eaf3ee;
+    --lifestyle-bg: #eef3ef;
+    --quiet-bg:     #fdf0e6;
+    --indie-bg:     #fcecea;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    direction: rtl;
+  }
+
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 48px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .logo { display: flex; align-items: baseline; gap: 10px; }
+  .logo-mark { font-size: 20px; font-weight: 900; color: var(--core); letter-spacing: -1px; }
+  .logo-sub { font-size: 12px; color: var(--muted); font-weight: 400; letter-spacing: 2px; text-transform: uppercase; }
+
+  main { padding: 36px 48px; max-width: 1000px; margin: 0 auto; }
+
+  .section-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 2.5px;
+    text-transform: uppercase; color: var(--muted2); margin-bottom: 14px;
+  }
+
+  /* TABS */
+  .tabs { display: flex; gap: 6px; margin-bottom: 24px; border-bottom: 1px solid var(--border); }
+  .tab-btn {
+    padding: 10px 4px; margin-left: 24px; background: none; border: none;
+    font-family: 'Heebo', sans-serif; font-size: 14px; font-weight: 600;
+    color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent;
+    margin-bottom: -1px; transition: color .15s, border-color .15s;
+  }
+  .tab-btn.active { color: var(--core); border-bottom-color: var(--core); }
+  .tab-btn:hover:not(.active) { color: var(--text); }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 24px 28px; margin-bottom: 14px;
+  }
+  .card-title {
+    font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase;
+    letter-spacing: 2px; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid var(--border);
+  }
+
+  .profile-badge {
+    display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px;
+    border-radius: 20px; font-size: 11px; font-weight: 700; white-space: nowrap;
+  }
+  .badge-core      { background: var(--core-bg); color: var(--core); }
+  .badge-lifestyle { background: var(--lifestyle-bg); color: var(--lifestyle); }
+  .badge-quiet     { background: var(--quiet-bg); color: var(--quiet); }
+  .badge-indie     { background: var(--indie-bg); color: var(--indie); }
+  .badge-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+
+  .leads-table { width: 100%; border-collapse: collapse; }
+  .leads-table th {
+    text-align: right; font-size: 10px; color: var(--muted2); text-transform: uppercase;
+    letter-spacing: 1.5px; padding: 0 14px 12px; border-bottom: 1px solid var(--border); font-weight: 600;
+  }
+  .leads-table td { padding: 13px 14px; font-size: 13px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .leads-table tr:last-child td { border-bottom: none; }
+  .leads-table tbody tr { cursor: pointer; }
+  .leads-table tr:hover td { background: var(--surface2); }
+  .name-hint { font-size: 10px; color: var(--muted2); font-weight: 400; margin-top: 1px; display: block; }
+
+  .attr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .attr-item { display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: var(--surface2); border-radius: 8px; font-size: 13px; }
+  .attr-icon { font-size: 15px; color: var(--core); flex-shrink: 0; width: 18px; text-align: center; }
+
+  .match-row { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 10px; cursor: pointer; transition: background .15s; }
+  .match-row:hover { background: #eae7e1; }
+  .match-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .match-score { font-size: 20px; font-weight: 900; letter-spacing: -0.5px; }
+  .match-track { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; margin-bottom: 10px; }
+  .match-fill { height: 100%; border-radius: 2px; transition: width .8s ease; }
+  .tag-chip { display: inline-block; font-size: 11px; padding: 4px 10px; border-radius: 20px; font-weight: 600; margin: 0 4px 4px 0; }
+  .tag-chip-on  { background: var(--core-bg); color: var(--core); }
+  .tag-chip-off { background: var(--surface); color: var(--muted2); border: 1px solid var(--border); }
+  .budget-note { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); margin-top: 8px; }
+
+  .drawer-overlay { position: fixed; inset: 0; background: rgba(26,24,20,0.3); z-index: 200; display: none; backdrop-filter: blur(2px); }
+  .drawer-overlay.open { display: block; }
+  .drawer { position: fixed; top: 64px; right: 0; bottom: 0; width: 380px; background: var(--surface); border-left: 1px solid var(--border); z-index: 201; transform: translateX(100%); transition: transform .32s cubic-bezier(0.4,0,0.2,1); overflow-y: auto; direction: rtl; }
+  .drawer.open { transform: translateX(0); }
+  .drawer-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px 16px; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--surface); z-index: 1; }
+  .drawer-header-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--core); }
+  .drawer-close { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface2); cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; color: var(--muted); }
+  .drawer-close:hover { background: var(--border); }
+  .drawer-body { padding: 22px 24px; }
+  .drawer-name { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+  .drawer-meta { font-size: 12px; color: var(--muted2); margin-bottom: 20px; }
+  .drawer-kpis { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 22px; }
+  .drawer-kpi { background: var(--surface2); border-radius: 8px; padding: 10px 12px; }
+  .drawer-kpi-label { font-size: 9px; color: var(--muted2); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; }
+  .drawer-kpi-value { font-size: 12px; font-weight: 700; color: var(--text); }
+  .drawer-slabel { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted2); margin-bottom: 10px; }
+
+  .tag-item { border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; overflow: hidden; }
+  .tag-item-head { display: flex; align-items: center; justify-content: space-between; padding: 11px 13px; cursor: pointer; }
+  .tag-item-title { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; }
+  .tag-item-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .dot-stated  { background: var(--core); }
+  .dot-inferred{ background: var(--quiet); }
+  .src-pill { font-size: 10px; padding: 2px 8px; border-radius: 20px; font-weight: 700; }
+  .src-stated  { background: var(--core-bg); color: var(--core); }
+  .src-inferred{ background: var(--quiet-bg); color: var(--quiet); }
+  .tag-item-body { padding: 0 13px 13px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); }
+  .tag-evidence { padding-top: 10px; }
+  .tag-angle { background: var(--core-bg); border-radius: 8px; padding: 10px 12px; margin-top: 8px; color: var(--text); line-height: 1.6; }
+  .chev { transition: transform .15s; }
+  .chev.open { transform: rotate(180deg); }
+
+  .matching-note { border: 1px dashed var(--border); border-radius: 8px; padding: 12px 14px; margin-top: 18px; }
+</style>
 </head>
 <body>
-<div id="root"></div>
 
-<script type="text/babel">
-const { useState, useEffect } = React;
-const Icon = ({ name, size = 15, className = '' }) => (
-  <i data-lucide={name} style={{ width: size, height: size }} className={className}></i>
-);
+<header>
+  <div class="logo">
+    <div class="logo-mark">נגבה</div>
+    <div class="logo-sub">תצוגת מכירות</div>
+  </div>
+</header>
 
-// MOCK — full lead records, shared by both the list view and the household card
+<main>
+  <div class="tabs">
+    <button class="tab-btn active" id="tabLeadsBtn" onclick="switchTab('leads')">רשימת לידים</button>
+    <button class="tab-btn" id="tabProjectBtn" onclick="switchTab('project')">התאמת פרויקט</button>
+  </div>
+
+  <div id="leadsView">
+    <div class="card">
+      <div class="card-title">לידים</div>
+      <table class="leads-table">
+        <thead><tr><th>שם</th><th>משק בית</th><th>פרופיל</th></tr></thead>
+        <tbody id="leadsBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="projectView" style="display:none">
+    <div class="card">
+      <div class="card-title">פרופיל פרויקט</div>
+      <div id="projectHeader" style="margin-bottom:18px"></div>
+      <div class="attr-grid" id="projectAttrs"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">לידים מתאימים</div>
+      <div id="matchList"></div>
+    </div>
+  </div>
+</main>
+
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <span class="drawer-header-label">תגיות עומק לשיחת מכירה</span>
+    <button class="drawer-close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="drawer-body">
+    <p class="drawer-name" id="drawerName"></p>
+    <p class="drawer-meta" id="drawerMeta"></p>
+    <div class="drawer-kpis" id="drawerKpis"></div>
+    <div class="drawer-slabel">תגיות</div>
+    <div id="drawerTags"></div>
+    <div class="matching-note">
+      <div class="drawer-slabel" style="margin-bottom:6px">נשמר להתאמות עתידיות</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6" id="drawerNotes"></div>
+    </div>
+  </div>
+</div>
+
+<script>
 const mockLeads = [
   {
     id: 'LEAD_2201', name: 'משפחת כהן', householdType: 'זוג עם ילדים', kidsAges: [4, 10],
-    profileMatch: 'Core Community', readinessStage: 'מחפשים באופן פעיל',
-    budgetRangeMillion: [3, 4], locations: ['רעננה', 'הוד השרון / כפר סבא'],
+    profileMatch: 'Core Community', badgeClass: 'badge-core',
+    readinessStage: 'מחפשים באופן פעיל', budgetRangeMillion: [3, 4], locations: ['רעננה'],
     tags: [
       { tag: 'חינוך יסודי', sourceType: 'inferred', evidence: 'ילד בגיל 10', salesAngle: 'בית הספר היסודי באזור נחשב טוב ובמרחק הליכה בטוחה' },
       { tag: 'חינוך גיל רך - גן', sourceType: 'inferred', evidence: 'ילד בגיל 4', salesAngle: 'יש גני ילדים איכותיים במרחק הליכה' },
@@ -36,8 +224,8 @@ const mockLeads = [
   },
   {
     id: 'LEAD_2214', name: 'משפחת לוי', householdType: 'זוג עם ילדים', kidsAges: [15],
-    profileMatch: 'Independent Urbanists', readinessStage: 'מתעניינים ומתחילים לבדוק',
-    budgetRangeMillion: [4, 5], locations: ['רעננה'],
+    profileMatch: 'Independent Urbanists', badgeClass: 'badge-indie',
+    readinessStage: 'מתעניינים ומתחילים לבדוק', budgetRangeMillion: [4, 5], locations: ['רעננה'],
     tags: [
       { tag: 'תיכון', sourceType: 'inferred', evidence: 'ילד/ה בגיל 15', salesAngle: 'תיכון איכותי בסביבה, רלוונטי גם לטווח הארוך' },
       { tag: 'רגישות גבוהה לשקט', sourceType: 'stated', evidence: 'בחר/ה "שקט ופרטיות" כמה שהכי גורם להרגיש בבית', salesAngle: 'הבניין כולו מוגדר כשקט - שווה לפתוח איתו' },
@@ -46,8 +234,8 @@ const mockLeads = [
   },
   {
     id: 'LEAD_2233', name: 'משפחת אזולאי', householdType: 'זוג עם ילדים', kidsAges: [8],
-    profileMatch: 'Quiet Belongers', readinessStage: 'מחכים להזדמנות הנכונה',
-    budgetRangeMillion: [2, 3], locations: ['רעננה', 'חדרה'],
+    profileMatch: 'Quiet Belongers', badgeClass: 'badge-quiet',
+    readinessStage: 'מחכים להזדמנות הנכונה', budgetRangeMillion: [2, 3], locations: ['רעננה'],
     tags: [
       { tag: 'חינוך יסודי', sourceType: 'inferred', evidence: 'ילד בגיל 8', salesAngle: 'בית ספר יסודי במרחק הליכה בטוחה' },
       { tag: 'צורך באחסון', sourceType: 'stated', evidence: 'בחר/ה "חדרי אחסון / ציוד" כמרחב חשוב', salesAngle: 'יש מחסן צמוד לכל דירה בפרויקט' },
@@ -59,194 +247,121 @@ const mockLeads = [
 const mockProject = {
   name: 'הגדוד העברי 24-26', location: 'רעננה', priceFromMillion: 3.3,
   attributes: [
-    { key: 'quiet_building', label: 'בניין שקט לאורך כל הפרויקט', icon: 'volume-2', matchesLeadTags: ['רגישות גבוהה לשקט'] },
-    { key: 'storage', label: 'מחסן צמוד לכל דירה', icon: 'package-check', matchesLeadTags: ['צורך באחסון'] },
-    { key: 'elementary_school', label: 'בי"ס יסודי הדר בקרבת מקום', icon: 'school', matchesLeadTags: ['חינוך יסודי'] },
-    { key: 'high_school', label: 'חט"ב ותיכון אמי"ת רננים', icon: 'school', matchesLeadTags: ['תיכון', 'חטיבת ביניים'] },
-    { key: 'green_community', label: 'שכונה קהילתית וירוקה, מעורבת', icon: 'trees', matchesLeadTags: [] },
+    { icon: '♪', label: 'בניין שקט לאורך כל הפרויקט', matchesLeadTags: ['רגישות גבוהה לשקט'] },
+    { icon: '▣', label: 'מחסן צמוד לכל דירה', matchesLeadTags: ['צורך באחסון'] },
+    { icon: '🎓', label: 'בי"ס יסודי הדר בקרבת מקום', matchesLeadTags: ['חינוך יסודי'] },
+    { icon: '🎓', label: 'חט"ב ותיכון אמי"ת רננים', matchesLeadTags: ['תיכון', 'חטיבת ביניים'] },
+    { icon: '❀', label: 'שכונה קהילתית וירוקה, מעורבת', matchesLeadTags: [] },
   ],
 };
 
 const projectMatchableTags = new Set(mockProject.attributes.flatMap(a => a.matchesLeadTags));
 
-function computeMatch(lead, project) {
+function computeMatch(lead) {
   const tagNames = lead.tags.map(t => t.tag);
   const matched = tagNames.filter(t => projectMatchableTags.has(t));
-  const tagScore = tagNames.length > 0 ? matched.length / tagNames.length : 0;
-  const budgetOk = lead.budgetRangeMillion[1] >= project.priceFromMillion;
+  const tagScore = tagNames.length ? matched.length / tagNames.length : 0;
+  const budgetOk = lead.budgetRangeMillion[1] >= mockProject.priceFromMillion;
   const finalScore = Math.round(tagScore * (budgetOk ? 1 : 0.5) * 100);
   return { matched, unmatched: tagNames.filter(t => !matched.includes(t)), budgetOk, finalScore };
 }
 
-function TagPill({ item }) {
-  const [open, setOpen] = useState(false);
-  const isStated = item.sourceType === 'stated';
-  return (
-    <div className="rounded-xl border border-gray-100 bg-white overflow-hidden">
-      <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between gap-3 px-4 py-3 text-right">
-        <div className="flex items-center gap-2 min-w-0">
-          <span className={`flex-shrink-0 w-2 h-2 rounded-full ${isStated ? 'bg-[#2D6A4F]' : 'bg-[#F4A261]'}`}></span>
-          <span className="font-semibold text-sm text-[#1B1B2F] truncate">{item.tag}</span>
-          <span className={`flex-shrink-0 text-[11px] px-2 py-0.5 rounded-full font-medium ${isStated ? 'bg-[#EAF3E9] text-[#2D6A4F]' : 'bg-[#FDF1E4] text-[#B5702E]'}`}>
-            {isStated ? 'נאמר' : 'מוערך'}
-          </span>
-        </div>
-        <Icon name={open ? 'chevron-up' : 'chevron-down'} className="text-gray-400 flex-shrink-0" />
-      </button>
-      {open && (
-        <div className="px-4 pb-4 pt-1 space-y-2 border-t border-gray-50">
-          <div className="text-xs text-[#6B7280]"><span className="font-medium text-[#1B1B2F]">מבוסס על: </span>{item.evidence}</div>
-          <div className="flex items-start gap-2 bg-[#F8F9FA] rounded-lg p-3">
-            <Icon name="sparkles" className="text-[#74C69D] flex-shrink-0 mt-0.5" />
-            <p className="text-sm text-[#1B1B2F] leading-relaxed">{item.salesAngle}</p>
-          </div>
-        </div>
-      )}
-    </div>
-  );
+function switchTab(tab) {
+  document.getElementById('tabLeadsBtn').classList.toggle('active', tab === 'leads');
+  document.getElementById('tabProjectBtn').classList.toggle('active', tab === 'project');
+  document.getElementById('leadsView').style.display = tab === 'leads' ? 'block' : 'none';
+  document.getElementById('projectView').style.display = tab === 'project' ? 'block' : 'none';
 }
 
-function HouseholdCardView({ lead, onBack }) {
-  return (
-    <div className="max-w-xl w-full mx-auto space-y-3">
-      <button onClick={onBack} className="flex items-center gap-1.5 text-sm text-[#6B7280] px-1">
-        <Icon name="arrow-right" size={15} /> חזרה לרשימה
-      </button>
-      <div className="rounded-2xl shadow-sm border border-gray-100 bg-white p-6">
-        <div className="flex items-start justify-between mb-5">
-          <div>
-            <h2 className="text-xl font-bold text-[#1B1B2F]">{lead.name}</h2>
-            <div className="flex items-center gap-1.5 mt-1 text-sm text-[#6B7280]">
-              <Icon name="users" size={14} />
-              <span>{lead.householdType}</span>
-              {lead.kidsAges?.length > 0 && <span>· ילדים בגילאי {lead.kidsAges.join(', ')}</span>}
-            </div>
-          </div>
-          <span className="text-xs font-semibold uppercase tracking-wide px-3 py-1.5 rounded-full bg-[#EAF3E9] text-[#2D6A4F] whitespace-nowrap">{lead.profileMatch}</span>
-        </div>
-        <div className="grid grid-cols-3 gap-3 mb-6">
-          <div className="rounded-xl bg-[#F8F9FA] p-3">
-            <div className="flex items-center gap-1.5 text-[#6B7280] mb-1"><Icon name="wallet" size={13} /><span className="text-[11px] font-semibold uppercase tracking-wide">תקציב</span></div>
-            <div className="text-sm font-bold text-[#1B1B2F]">{lead.budgetRangeMillion[0]}-{lead.budgetRangeMillion[1]}M</div>
-          </div>
-          <div className="rounded-xl bg-[#F8F9FA] p-3">
-            <div className="flex items-center gap-1.5 text-[#6B7280] mb-1"><Icon name="clock" size={13} /><span className="text-[11px] font-semibold uppercase tracking-wide">מוכנות</span></div>
-            <div className="text-sm font-bold text-[#1B1B2F]">{lead.readinessStage}</div>
-          </div>
-          <div className="rounded-xl bg-[#F8F9FA] p-3">
-            <div className="flex items-center gap-1.5 text-[#6B7280] mb-1"><Icon name="map-pin" size={13} /><span className="text-[11px] font-semibold uppercase tracking-wide">אזורים</span></div>
-            <div className="text-sm font-bold text-[#1B1B2F] truncate">{lead.locations[0]}</div>
-          </div>
-        </div>
-        <div className="mb-5">
-          <div className="flex items-center gap-1.5 mb-3">
-            <Icon name="tag" size={14} className="text-[#6B7280]" />
-            <h3 className="text-sm font-semibold uppercase tracking-wide text-[#6B7280]">תגיות עומק לשיחת מכירה</h3>
-          </div>
-          <div className="space-y-2">{lead.tags.map((item, i) => <TagPill key={i} item={item} />)}</div>
-        </div>
-        <div className="rounded-xl border border-dashed border-gray-200 p-3">
-          <p className="text-[11px] font-semibold uppercase tracking-wide text-[#6B7280] mb-1">נשמר להתאמות עתידיות</p>
-          <p className="text-xs text-[#6B7280] leading-relaxed">{lead.notesForMatching}</p>
-        </div>
-      </div>
-    </div>
-  );
+function renderLeadsTable() {
+  const tbody = document.getElementById('leadsBody');
+  tbody.innerHTML = mockLeads.map(l => `
+    <tr onclick="openDrawer('${l.id}')">
+      <td><strong>${l.name}</strong><span class="name-hint">${l.tags.length} תגיות עומק</span></td>
+      <td style="color:var(--muted);font-size:12px">${l.householdType}</td>
+      <td><span class="profile-badge ${l.badgeClass}"><span class="badge-dot"></span>${l.profileMatch}</span></td>
+    </tr>`).join('');
 }
 
-function LeadListRow({ lead, onOpen }) {
-  return (
-    <button onClick={() => onOpen(lead.id)} className="w-full rounded-xl border border-gray-100 bg-white p-4 flex items-center justify-between text-right">
-      <div>
-        <div className="font-semibold text-sm text-[#1B1B2F]">{lead.name}</div>
-        <div className="text-xs text-[#6B7280] mt-0.5">{lead.householdType} · {lead.tags.length} תגיות עומק</div>
-      </div>
-      <span className="text-xs font-semibold uppercase tracking-wide px-2.5 py-1 rounded-full bg-[#EAF3E9] text-[#2D6A4F]">{lead.profileMatch}</span>
-    </button>
-  );
-}
+function renderProjectView() {
+  document.getElementById('projectHeader').innerHTML = `
+    <div style="font-size:18px;font-weight:700">${mockProject.name}</div>
+    <div style="font-size:12px;color:var(--muted);margin-top:4px">${mockProject.location} · מ-${mockProject.priceFromMillion}M</div>`;
+  document.getElementById('projectAttrs').innerHTML = mockProject.attributes.map(a => `
+    <div class="attr-item"><span class="attr-icon">${a.icon}</span><span>${a.label}</span></div>`).join('');
 
-function ScoreBar({ score }) {
-  const color = score >= 70 ? '#2D6A4F' : score >= 40 ? '#F4A261' : '#E63946';
-  return <div className="w-full h-1.5 rounded-full bg-gray-100 overflow-hidden"><div className="h-full rounded-full" style={{ width: `${score}%`, backgroundColor: color }}></div></div>;
-}
-
-function MatchRow({ lead, project, onOpen }) {
-  const { matched, unmatched, budgetOk, finalScore } = computeMatch(lead, project);
-  return (
-    <button onClick={() => onOpen(lead.id)} className="w-full text-right rounded-xl border border-gray-100 bg-white p-4">
-      <div className="flex items-center justify-between mb-2">
-        <span className="font-semibold text-sm text-[#1B1B2F]">{lead.name}</span>
-        <span className="text-lg font-bold" style={{ color: finalScore >= 70 ? '#2D6A4F' : finalScore >= 40 ? '#B5702E' : '#B02A34' }}>{finalScore}%</span>
-      </div>
-      <ScoreBar score={finalScore} />
-      <div className="flex flex-wrap gap-1.5 mt-3">
-        {matched.map(t => <span key={t} className="text-[11px] px-2 py-1 rounded-full bg-[#EAF3E9] text-[#2D6A4F] font-medium">{t}</span>)}
-        {unmatched.map(t => <span key={t} className="text-[11px] px-2 py-1 rounded-full bg-gray-50 text-gray-400 font-medium">{t}</span>)}
-      </div>
-      <div className="flex items-center gap-1.5 mt-3 text-xs">
-        <Icon name={budgetOk ? 'check-circle-2' : 'x-circle'} size={13} className={budgetOk ? 'text-[#2D6A4F]' : 'text-[#E63946]'} />
-        <span className="text-[#6B7280]">{budgetOk ? `תואם תקציב (${lead.budgetRangeMillion[0]}-${lead.budgetRangeMillion[1]}M)` : `מתחת לטווח המחיר (${lead.budgetRangeMillion[0]}-${lead.budgetRangeMillion[1]}M)`}</span>
-      </div>
-    </button>
-  );
-}
-
-function SalesFlow() {
-  const [tab, setTab] = useState('leads');
-  const [selectedLeadId, setSelectedLeadId] = useState(null);
-  useEffect(() => { window.lucide && window.lucide.createIcons(); });
-
-  const selectedLead = mockLeads.find(l => l.id === selectedLeadId);
-  const ranked = [...mockLeads].sort((a, b) => computeMatch(b, mockProject).finalScore - computeMatch(a, mockProject).finalScore);
-
-  if (selectedLead) {
-    return <HouseholdCardView lead={selectedLead} onBack={() => setSelectedLeadId(null)} />;
-  }
-
-  return (
-    <div className="max-w-xl w-full mx-auto space-y-4">
-      <div className="flex gap-2 p-1 rounded-xl bg-[#F8F9FA] w-fit">
-        <button onClick={() => setTab('leads')} className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium ${tab === 'leads' ? 'bg-white shadow-sm text-[#1B1B2F]' : 'text-[#6B7280]'}`}>
-          <Icon name="list" size={14} /> רשימת לידים
-        </button>
-        <button onClick={() => setTab('project')} className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium ${tab === 'project' ? 'bg-white shadow-sm text-[#1B1B2F]' : 'text-[#6B7280]'}`}>
-          <Icon name="map-pin" size={14} /> התאמת פרויקט
-        </button>
-      </div>
-
-      {tab === 'leads' && (
-        <div className="space-y-2">{mockLeads.map(lead => <LeadListRow key={lead.id} lead={lead} onOpen={setSelectedLeadId} />)}</div>
-      )}
-
-      {tab === 'project' && (
-        <div className="space-y-4">
-          <div className="rounded-2xl shadow-sm border border-gray-100 bg-white p-6">
-            <h2 className="text-xl font-bold text-[#1B1B2F]">{mockProject.name}</h2>
-            <div className="flex items-center gap-1.5 mt-1 mb-4 text-sm text-[#6B7280]">
-              <Icon name="map-pin" size={14} /><span>{mockProject.location}</span><span>·</span><Icon name="wallet" size={14} /><span>מ-{mockProject.priceFromMillion}M</span>
-            </div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-[#6B7280] mb-2">פרופיל פרויקט</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              {mockProject.attributes.map(attr => (
-                <div key={attr.key} className="flex items-center gap-2 rounded-lg bg-[#F8F9FA] px-3 py-2">
-                  <Icon name={attr.icon} size={15} className="text-[#2D6A4F] flex-shrink-0" />
-                  <span className="text-xs text-[#1B1B2F]">{attr.label}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-[#6B7280] mb-2 px-1">לידים מתאימים ({ranked.length})</p>
-            <div className="space-y-2">{ranked.map(lead => <MatchRow key={lead.id} lead={lead} project={mockProject} onOpen={setSelectedLeadId} />)}</div>
-          </div>
+  const ranked = [...mockLeads].sort((a, b) => computeMatch(b).finalScore - computeMatch(a).finalScore);
+  document.getElementById('matchList').innerHTML = ranked.map(l => {
+    const m = computeMatch(l);
+    const color = m.finalScore >= 70 ? 'var(--core)' : m.finalScore >= 40 ? 'var(--quiet)' : 'var(--indie)';
+    const chips = m.matched.map(t => `<span class="tag-chip tag-chip-on">${t}</span>`).join('') +
+                  m.unmatched.map(t => `<span class="tag-chip tag-chip-off">${t}</span>`).join('');
+    return `
+      <div class="match-row" onclick="openDrawer('${l.id}')">
+        <div class="match-head">
+          <strong style="font-size:13px">${l.name}</strong>
+          <span class="match-score" style="color:${color}">${m.finalScore}%</span>
         </div>
-      )}
-    </div>
-  );
+        <div class="match-track"><div class="match-fill" style="width:${m.finalScore}%;background:${color}"></div></div>
+        <div>${chips}</div>
+        <div class="budget-note">${m.budgetOk ? '✓' : '✕'} ${m.budgetOk ? `תואם תקציב (${l.budgetRangeMillion[0]}-${l.budgetRangeMillion[1]}M)` : `מתחת לטווח המחיר (${l.budgetRangeMillion[0]}-${l.budgetRangeMillion[1]}M)`}</div>
+      </div>`;
+  }).join('');
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(<SalesFlow />);
+function toggleTagItem(idx) {
+  const body = document.getElementById('tagBody' + idx);
+  const chev = document.getElementById('tagChev' + idx);
+  const isOpen = body.style.display === 'block';
+  body.style.display = isOpen ? 'none' : 'block';
+  chev.classList.toggle('open', !isOpen);
+}
+
+function openDrawer(id) {
+  const lead = mockLeads.find(l => l.id === id);
+  if (!lead) return;
+
+  document.getElementById('drawerName').textContent = lead.name;
+  document.getElementById('drawerMeta').textContent = lead.householdType +
+    (lead.kidsAges.length ? ` · ילדים בגילאי ${lead.kidsAges.join(', ')}` : '');
+
+  document.getElementById('drawerKpis').innerHTML = `
+    <div class="drawer-kpi"><div class="drawer-kpi-label">תקציב</div><div class="drawer-kpi-value">${lead.budgetRangeMillion[0]}-${lead.budgetRangeMillion[1]}M</div></div>
+    <div class="drawer-kpi"><div class="drawer-kpi-label">מוכנות</div><div class="drawer-kpi-value">${lead.readinessStage}</div></div>
+    <div class="drawer-kpi"><div class="drawer-kpi-label">אזור</div><div class="drawer-kpi-value">${lead.locations[0]}</div></div>`;
+
+  document.getElementById('drawerTags').innerHTML = lead.tags.map((t, i) => {
+    const stated = t.sourceType === 'stated';
+    return `
+      <div class="tag-item">
+        <div class="tag-item-head" onclick="toggleTagItem(${i})">
+          <div class="tag-item-title">
+            <span class="tag-item-dot ${stated ? 'dot-stated' : 'dot-inferred'}"></span>
+            ${t.tag}
+            <span class="src-pill ${stated ? 'src-stated' : 'src-inferred'}">${stated ? 'נאמר' : 'מוערך'}</span>
+          </div>
+          <span class="chev" id="tagChev${i}">▾</span>
+        </div>
+        <div class="tag-item-body" id="tagBody${i}" style="display:none">
+          <div class="tag-evidence"><strong style="color:var(--text)">מבוסס על:</strong> ${t.evidence}</div>
+          <div class="tag-angle">${t.salesAngle}</div>
+        </div>
+      </div>`;
+  }).join('');
+
+  document.getElementById('drawerNotes').textContent = lead.notesForMatching;
+
+  document.getElementById('drawerOverlay').classList.add('open');
+  document.getElementById('drawer').classList.add('open');
+}
+
+function closeDrawer() {
+  document.getElementById('drawerOverlay').classList.remove('open');
+  document.getElementById('drawer').classList.remove('open');
+}
+
+renderLeadsTable();
+renderProjectView();
 </script>
 </body>
 </html>
