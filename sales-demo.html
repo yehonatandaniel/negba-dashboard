@@ -19,16 +19,37 @@
   .logo { display: flex; align-items: baseline; gap: 10px; }
   .logo-mark { font-size: 20px; font-weight: 900; color: var(--core); letter-spacing: -1px; }
   .logo-sub { font-size: 12px; color: var(--muted); font-weight: 400; letter-spacing: 2px; text-transform: uppercase; }
+  .last-updated { font-size: 12px; color: var(--muted2); }
 
-  main { padding: 36px 48px; max-width: 1000px; margin: 0 auto; }
+  #loading { display:flex;flex-direction:column;align-items:center;justify-content:center;height:60vh;gap:14px;color:var(--muted);font-size:14px; }
+  .spinner { width:32px;height:32px;border:2px solid var(--border);border-top-color:var(--core);border-radius:50%;animation:spin .8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
 
-  .tabs { display: flex; gap: 6px; margin-bottom: 24px; border-bottom: 1px solid var(--border); }
-  .tab-btn { padding: 10px 4px; margin-left: 24px; background: none; border: none; font-family: 'Heebo', sans-serif; font-size: 14px; font-weight: 600; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: color .15s, border-color .15s; }
-  .tab-btn.active { color: var(--core); border-bottom-color: var(--core); }
-  .tab-btn:hover:not(.active) { color: var(--text); }
+  main { padding: 36px 48px; max-width: 1360px; margin: 0 auto; display: none; }
 
-  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 24px 28px; margin-bottom: 14px; }
+  .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 36px; }
+  .kpi-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 22px 24px; }
+  .kpi-label { font-size: 11px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
+  .kpi-value { font-size: 42px; font-weight: 900; line-height: 1; color: var(--text); letter-spacing: -2px; }
+  .kpi-sub { font-size: 12px; color: var(--muted2); margin-top: 6px; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .grid-full { margin-bottom: 14px; }
+
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 24px 28px; }
   .card-title { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+
+  .profile-list { display: flex; flex-direction: column; gap: 14px; }
+  .profile-row { display: grid; grid-template-columns: 28px 1fr 60px; align-items: center; gap: 12px; }
+  .profile-num { font-size: 11px; color: var(--muted2); text-align: center; font-weight: 600; }
+  .profile-bar-name { font-size: 13px; font-weight: 600; margin-bottom: 5px; color: var(--text); }
+  .profile-bar-track { height: 5px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
+  .profile-bar-fill { height: 100%; border-radius: 3px; transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1); }
+  .profile-pct { font-size: 22px; font-weight: 900; text-align: left; letter-spacing: -1px; }
+
+  .attr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .attr-item { display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: var(--surface2); border-radius: 8px; font-size: 13px; }
+  .attr-icon { font-size: 15px; color: var(--core); flex-shrink: 0; width: 18px; text-align: center; }
 
   .profile-badge { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; white-space: nowrap; }
   .badge-core { background: var(--core-bg); color: var(--core); }
@@ -44,23 +65,11 @@
   .leads-table tbody tr { cursor: pointer; }
   .leads-table tr:hover td { background: var(--surface2); }
   .name-hint { font-size: 10px; color: var(--muted2); font-weight: 400; margin-top: 1px; display: block; }
+  .match-pct { font-weight: 900; font-size: 15px; }
+  .match-mini-track { width: 60px; height: 4px; background: var(--surface2); border-radius: 2px; overflow: hidden; display: inline-block; margin-inline-end: 8px; vertical-align: middle; }
+  .match-mini-fill { height: 100%; border-radius: 2px; }
+  .empty-state { color: var(--muted2); font-size: 13px; padding: 12px 0; }
 
-  .attr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .attr-item { display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: var(--surface2); border-radius: 8px; font-size: 13px; }
-  .attr-icon { font-size: 15px; color: var(--core); flex-shrink: 0; width: 18px; text-align: center; }
-
-  .match-row { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 10px; cursor: pointer; transition: background .15s; }
-  .match-row:hover { background: #eae7e1; }
-  .match-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-  .match-score { font-size: 20px; font-weight: 900; letter-spacing: -0.5px; }
-  .match-track { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; margin-bottom: 10px; }
-  .match-fill { height: 100%; border-radius: 2px; transition: width .8s ease; }
-  .tag-chip { display: inline-block; font-size: 11px; padding: 4px 10px; border-radius: 20px; font-weight: 600; margin: 0 4px 4px 0; }
-  .tag-chip-on { background: var(--core-bg); color: var(--core); }
-  .tag-chip-off { background: var(--surface); color: var(--muted2); border: 1px solid var(--border); }
-  .budget-note { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); margin-top: 8px; }
-
-  /* ── copied verbatim from the live dashboard's bs-panel ── */
   .bs-overlay { position:fixed;inset:0;background:rgba(26,24,20,0.3);z-index:200;display:none;backdrop-filter:blur(2px); }
   .bs-overlay.open { display:block; }
   .bs-panel { position:fixed;top:64px;right:0;bottom:0;width:380px;background:var(--surface);border-left:1px solid var(--border);z-index:201;transform:translateX(100%);transition:transform .32s cubic-bezier(0.4,0,0.2,1);overflow-y:auto;direction:rtl; }
@@ -100,35 +109,59 @@
     <div class="logo-mark">נגבה</div>
     <div class="logo-sub">תצוגת מכירות</div>
   </div>
+  <div class="last-updated" id="lastUpdated">טוען...</div>
 </header>
 
-<main>
-  <div class="tabs">
-    <button class="tab-btn active" id="tabLeadsBtn" onclick="switchTab('leads')">רשימת לידים</button>
-    <button class="tab-btn" id="tabProjectBtn" onclick="switchTab('project')">התאמת פרויקט</button>
-  </div>
+<div id="loading">
+  <div class="spinner"></div>
+  <div>טוען לידים...</div>
+</div>
 
-  <div id="leadsView">
-    <div class="card">
-      <div class="card-title">לידים</div>
-      <table class="leads-table">
-        <thead><tr><th>שם</th><th>משק בית</th><th>פרופיל</th></tr></thead>
-        <tbody id="leadsBody"></tbody>
-      </table>
+<main id="main">
+
+  <div class="kpi-row">
+    <div class="kpi-card">
+      <div class="kpi-label">סה"כ לידים</div>
+      <div class="kpi-value" id="kpiTotal">—</div>
+      <div class="kpi-sub">בפייפליין הנוכחי</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">מוכנות גבוהה</div>
+      <div class="kpi-value" id="kpiReady">—</div>
+      <div class="kpi-sub">מחפשים באופן פעיל / בתהליך מתקדם</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">התאמה ממוצעת לפרויקט</div>
+      <div class="kpi-value" id="kpiMatch">—</div>
+      <div class="kpi-sub">הגדוד העברי 24-26</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">וודאות תגיות ממוצעת</div>
+      <div class="kpi-value" id="kpiCertainty">—</div>
+      <div class="kpi-sub">תגיות "נאמר" מתוך הכלל</div>
     </div>
   </div>
 
-  <div id="projectView" style="display:none">
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">התפלגות פרופילים</div>
+      <div class="profile-list" id="profileBars"></div>
+    </div>
     <div class="card">
       <div class="card-title">פרופיל פרויקט</div>
-      <div id="projectHeader" style="margin-bottom:18px"></div>
+      <div id="projectHeader" style="margin-bottom:14px"></div>
       <div class="attr-grid" id="projectAttrs"></div>
     </div>
-    <div class="card">
-      <div class="card-title">לידים מתאימים</div>
-      <div id="matchList"></div>
-    </div>
   </div>
+
+  <div class="card grid-full">
+    <div class="card-title">לידים</div>
+    <table class="leads-table">
+      <thead><tr><th>שם</th><th>משק בית</th><th>פרופיל</th><th>התאמה לפרויקט</th></tr></thead>
+      <tbody id="leadsBody"></tbody>
+    </table>
+  </div>
+
 </main>
 
 <div class="bs-overlay" id="bsOverlay" onclick="closeDrawer()"></div>
@@ -178,43 +211,7 @@
 </div>
 
 <script>
-const mockLeads = [
-  {
-    id: 'LEAD_2201', name: 'משפחת כהן', householdType: 'זוג עם ילדים', kidsAges: [4, 10],
-    profileMatch: 'Core Community', badgeClass: 'badge-core',
-    readinessStage: 'מחפשים באופן פעיל', readinessTier: 'high',
-    budgetRangeMillion: [3, 4], locations: ['רעננה'],
-    tags: [
-      { tag: 'חינוך יסודי', sourceType: 'inferred', evidence: 'ילד בגיל 10', salesAngle: 'בית הספר היסודי באזור נחשב טוב ובמרחק הליכה בטוחה' },
-      { tag: 'חינוך גיל רך - גן', sourceType: 'inferred', evidence: 'ילד בגיל 4', salesAngle: 'יש גני ילדים איכותיים במרחק הליכה' },
-      { tag: 'רגישות גבוהה לשקט', sourceType: 'stated', evidence: 'בחר/ה "רעש וחוסר שקט" כמה שהכי לא רוצה שיקרה סביב הבית', salesAngle: 'אפשר להתמקד בדירות בקומות גבוהות או עורפיות, רחוקות מרעש רחוב' },
-      { tag: 'צורך באחסון', sourceType: 'stated', evidence: 'בחר/ה "חדרי אחסון / ציוד" כמרחב חשוב', salesAngle: 'בפרויקט יש מחסנים צמודים - שווה להדגיש כבר בפגישה הראשונה' },
-    ],
-    notesForMatching: 'משפחה עם 2 ילדים (4, 10), רגישות לשקט, צורך באחסון — מתאים לפרויקטים שקטים עם מחסנים ומרחבי ילדים',
-  },
-  {
-    id: 'LEAD_2214', name: 'משפחת לוי', householdType: 'זוג עם ילדים', kidsAges: [15],
-    profileMatch: 'Independent Urbanists', badgeClass: 'badge-indie',
-    readinessStage: 'מתעניינים ומתחילים לבדוק', readinessTier: 'med',
-    budgetRangeMillion: [4, 5], locations: ['רעננה'],
-    tags: [
-      { tag: 'תיכון', sourceType: 'inferred', evidence: 'ילד/ה בגיל 15', salesAngle: 'תיכון איכותי בסביבה, רלוונטי גם לטווח הארוך' },
-      { tag: 'רגישות גבוהה לשקט', sourceType: 'stated', evidence: 'בחר/ה "שקט ופרטיות" כמה שהכי גורם להרגיש בבית', salesAngle: 'הבניין כולו מוגדר כשקט - שווה לפתוח איתו' },
-    ],
-    notesForMatching: 'משפחה עם נער בגיל תיכון, רגישות לשקט — מתאים לפרויקטים עם תיכון איכותי בסביבה',
-  },
-  {
-    id: 'LEAD_2233', name: 'משפחת אזולאי', householdType: 'זוג עם ילדים', kidsAges: [8],
-    profileMatch: 'Quiet Belongers', badgeClass: 'badge-quiet',
-    readinessStage: 'מחכים להזדמנות הנכונה', readinessTier: 'low',
-    budgetRangeMillion: [2, 3], locations: ['רעננה'],
-    tags: [
-      { tag: 'חינוך יסודי', sourceType: 'inferred', evidence: 'ילד בגיל 8', salesAngle: 'בית ספר יסודי במרחק הליכה בטוחה' },
-      { tag: 'צורך באחסון', sourceType: 'stated', evidence: 'בחר/ה "חדרי אחסון / ציוד" כמרחב חשוב', salesAngle: 'יש מחסן צמוד לכל דירה בפרויקט' },
-    ],
-    notesForMatching: 'משפחה עם ילד יסודי, צורך באחסון, תקציב נמוך יותר — מתאים לפרויקטים חסכוניים יותר עם מחסן',
-  },
-];
+const API_URL = "https://script.google.com/macros/s/AKfycbyBCWYXQ5qx8i5bFoWdQLKne9bQoFDQM3FEJuhApiRVbtuSGN4OQ3xiEzxqxd3ZdiZJ/exec";
 
 const mockProject = {
   name: 'הגדוד העברי 24-26', location: 'רעננה', priceFromMillion: 3.3,
@@ -222,18 +219,81 @@ const mockProject = {
     { icon: '♪', label: 'בניין שקט לאורך כל הפרויקט', matchesLeadTags: ['רגישות גבוהה לשקט'] },
     { icon: '▣', label: 'מחסן צמוד לכל דירה', matchesLeadTags: ['צורך באחסון'] },
     { icon: '🎓', label: 'בי"ס יסודי הדר בקרבת מקום', matchesLeadTags: ['חינוך יסודי'] },
-    { icon: '🎓', label: 'חט"ב ותיכון אמי"ת רננים', matchesLeadTags: ['תיכון', 'חטיבת ביניים'] },
+    { icon: '🎓', label: 'חט"ב ותיכון אמי"ת רננים', matchesLeadTags: ['חינוך תיכון', 'חינוך חטיבת ביניים'] },
     { icon: '❀', label: 'שכונה קהילתית וירוקה, מעורבת', matchesLeadTags: [] },
   ],
 };
 
+const PROFILE_META = {
+  'Core Community':            { cls: 'badge-core',      fill: '#2d6a4f' },
+  'Lifestyle Cluster Seekers': { cls: 'badge-lifestyle',  fill: '#6b8f71' },
+  'Quiet Belongers':           { cls: 'badge-quiet',      fill: '#c9854a' },
+  'Independent Urbanists':     { cls: 'badge-indie',      fill: '#9b3a2a' },
+};
+const SPECTRUM_ORDER = ['Core Community', 'Lifestyle Cluster Seekers', 'Quiet Belongers', 'Independent Urbanists'];
 const RING_COLORS = { high: '#2d6a4f', med: '#c9854a', low: '#9b3a2a' };
 const READINESS_CFG = {
   high: { bg: 'var(--core-bg)', color: 'var(--core)' },
-  med:  { bg: 'var(--quiet-bg)', color: 'var(--warn, var(--quiet))' },
+  med:  { bg: 'var(--quiet-bg)', color: 'var(--quiet)' },
   low:  { bg: 'var(--indie-bg)', color: 'var(--indie)' },
 };
 const CERTAINTY_LABEL = { high: 'פרופיל מאומת ברובו', med: 'פרופיל מעורב', low: 'פרופיל מוערך ברובו' };
+
+function profileKey(p) {
+  if (!p) return null;
+  const first = p.toString().split('\n')[0].trim();
+  for (const key of Object.keys(PROFILE_META)) if (first.includes(key)) return key;
+  return null;
+}
+
+// ── Tag extraction from real sheet fields ──
+const EDU_TAG_MAP = { 'גיל רך': 'חינוך גיל רך', 'יסודי': 'חינוך יסודי', 'חטיבת ביניים': 'חינוך חטיבת ביניים', 'חטיבה': 'חינוך חטיבת ביניים', 'תיכון': 'חינוך תיכון' };
+
+function extractTags(f) {
+  const tags = [];
+  const kidsAges = (f['גילאי ילדים'] || '').toString();
+  Object.keys(EDU_TAG_MAP).forEach(key => {
+    if (kidsAges.includes(key) && !kidsAges.includes('לאחר ' + key) && !kidsAges.includes('אחרי ' + key)) {
+      tags.push({ tag: EDU_TAG_MAP[key], sourceType: 'inferred', evidence: 'גילאי ילדים: ' + kidsAges.replace(/\n/g, ', '), salesAngle: 'רלוונטי למוסדות חינוך בשלב ' + key + ' בסביבת הפרויקט' });
+    }
+  });
+
+  const notWant = (f['מה הכי חשוב לכם שלא יקרה סביב הבית?'] || '').toString();
+  if (notWant.includes('רעש')) {
+    tags.push({ tag: 'רגישות גבוהה לשקט', sourceType: 'stated', evidence: 'בחר/ה "' + notWant.split('\n')[0] + '" כמה שהכי לא רוצה שיקרה', salesAngle: 'אפשר להתמקד בדירות שקטות, רחוקות מרעש רחוב' });
+  }
+  if (notWant.includes('ערכיים') || notWant.includes('פוליטיקה')) {
+    tags.push({ tag: 'רגישות להומוגניות חברתית', sourceType: 'stated', evidence: 'ציין/ה חשש מפערים ערכיים / פוליטיקה ורכילות', salesAngle: 'שווה להדגיש את פרופיל השכונה והאוכלוסייה בפרויקט' });
+  }
+
+  const amenities = (f['אילו מרחבים או שירותים חשובים לכם במיוחד?'] || '').toString();
+  if (amenities.includes('אחסון')) {
+    tags.push({ tag: 'צורך באחסון', sourceType: 'stated', evidence: 'בחר/ה "חדרי אחסון / ציוד" כמרחב חשוב', salesAngle: 'שווה להדגיש מחסן צמוד אם קיים בפרויקט' });
+  }
+  if (amenities.includes('עבודה')) {
+    tags.push({ tag: 'עבודה מהבית', sourceType: 'stated', evidence: 'בחר/ה "חלל עבודה משותף" כמרחב חשוב', salesAngle: 'שווה להדגיש חדר עבודה / חלל שקט בדירה' });
+  }
+
+  return tags;
+}
+
+function getReadiness(f) {
+  const v = (f['איפה אתם נמצאים היום ביחס למעבר דירה?'] || '').toString().trim();
+  let tier = 'low';
+  if (v.includes('בתהליך מתקדם') || v.includes('מחפשים באופן פעיל')) tier = 'high';
+  else if (v.includes('מחכים') || v.includes('מתעניינים')) tier = 'med';
+  return { stage: v || 'לא צוין', tier };
+}
+
+// confirmed against real sheet: format is e.g. "2M- 3M", "3M- 4M", "4M- 5M"
+function getBudgetMax(f) {
+  const raw = (f['מה התקציב העומד לרשותכם?'] || '').toString();
+  if (!raw) return null;
+  if (raw.includes('ומעלה')) return 99;
+  const nums = raw.match(/\d+/g);
+  if (!nums || !nums.length) return null;
+  return Math.max(...nums.map(Number));
+}
 
 const projectMatchableTags = new Set(mockProject.attributes.flatMap(a => a.matchesLeadTags));
 
@@ -241,72 +301,96 @@ function computeMatch(lead) {
   const tagNames = lead.tags.map(t => t.tag);
   const matched = tagNames.filter(t => projectMatchableTags.has(t));
   const tagScore = tagNames.length ? matched.length / tagNames.length : 0;
-  const budgetOk = lead.budgetRangeMillion[1] >= mockProject.priceFromMillion;
+  const budgetKnown = lead.budgetMax !== null;
+  const budgetOk = !budgetKnown || lead.budgetMax >= mockProject.priceFromMillion;
   const finalScore = Math.round(tagScore * (budgetOk ? 1 : 0.5) * 100);
-  return { matched, unmatched: tagNames.filter(t => !matched.includes(t)), budgetOk, finalScore };
+  return { matched, unmatched: tagNames.filter(t => !matched.includes(t)), budgetOk, budgetKnown, finalScore };
 }
 
-// certainty = % of tags that are directly stated (vs inferred) — a real, meaningful metric
 function computeCertainty(lead) {
+  if (!lead.tags.length) return { score: 0, tier: 'low' };
   const stated = lead.tags.filter(t => t.sourceType === 'stated').length;
   const score = Math.round((stated / lead.tags.length) * 100);
   const tier = score >= 70 ? 'high' : score >= 40 ? 'med' : 'low';
   return { score, tier };
 }
 
-function switchTab(tab) {
-  document.getElementById('tabLeadsBtn').classList.toggle('active', tab === 'leads');
-  document.getElementById('tabProjectBtn').classList.toggle('active', tab === 'project');
-  document.getElementById('leadsView').style.display = tab === 'leads' ? 'block' : 'none';
-  document.getElementById('projectView').style.display = tab === 'project' ? 'block' : 'none';
+function pct(n, total) { return total ? Math.round((n / total) * 100) : 0; }
+
+let leads = [];
+
+function renderKPIs() {
+  document.getElementById('kpiTotal').textContent = leads.length;
+  document.getElementById('kpiReady').textContent = leads.filter(l => l.readinessTier === 'high').length;
+
+  const scores = leads.map(l => computeMatch(l).finalScore);
+  document.getElementById('kpiMatch').textContent = scores.length ? Math.round(scores.reduce((s, v) => s + v, 0) / scores.length) + '%' : '—';
+
+  const certainties = leads.map(l => computeCertainty(l).score).filter(s => s > 0 || true);
+  document.getElementById('kpiCertainty').textContent = leads.length ? Math.round(certainties.reduce((s, v) => s + v, 0) / leads.length) + '%' : '—';
 }
 
-function renderLeadsTable() {
-  document.getElementById('leadsBody').innerHTML = mockLeads.map(l => `
-    <tr onclick="openDrawer('${l.id}')">
-      <td><strong>${l.name}</strong><span class="name-hint">${l.tags.length} תגיות עומק</span></td>
-      <td style="color:var(--muted);font-size:12px">${l.householdType}</td>
-      <td><span class="profile-badge ${l.badgeClass}"><span class="badge-dot"></span>${l.profileMatch}</span></td>
-    </tr>`).join('');
+function renderProfileBars() {
+  const counts = {};
+  leads.forEach(l => { if (l.profileMatch) counts[l.profileMatch] = (counts[l.profileMatch] || 0) + 1; });
+  const analyzed = leads.filter(l => l.profileMatch).length;
+  document.getElementById('profileBars').innerHTML = SPECTRUM_ORDER.map((name, idx) => {
+    const n = counts[name] || 0;
+    const p = pct(n, analyzed);
+    const meta = PROFILE_META[name];
+    return `
+      <div class="profile-row">
+        <div class="profile-num">${idx + 1}</div>
+        <div>
+          <div class="profile-bar-name">${name}</div>
+          <div class="profile-bar-track"><div class="profile-bar-fill" style="width:${p}%;background:${meta.fill}"></div></div>
+        </div>
+        <div class="profile-pct" style="color:${meta.fill}">${p}%</div>
+      </div>`;
+  }).join('');
 }
 
-function renderProjectView() {
+function renderProject() {
   document.getElementById('projectHeader').innerHTML = `
-    <div style="font-size:18px;font-weight:700">${mockProject.name}</div>
+    <div style="font-size:16px;font-weight:700">${mockProject.name}</div>
     <div style="font-size:12px;color:var(--muted);margin-top:4px">${mockProject.location} · מ-${mockProject.priceFromMillion}M</div>`;
   document.getElementById('projectAttrs').innerHTML = mockProject.attributes.map(a => `
     <div class="attr-item"><span class="attr-icon">${a.icon}</span><span>${a.label}</span></div>`).join('');
+}
 
-  const ranked = [...mockLeads].sort((a, b) => computeMatch(b).finalScore - computeMatch(a).finalScore);
-  document.getElementById('matchList').innerHTML = ranked.map(l => {
+function renderLeadsTable() {
+  const tbody = document.getElementById('leadsBody');
+  if (!leads.length) { tbody.innerHTML = '<tr><td colspan="4"><div class="empty-state">אין לידים עדיין</div></td></tr>'; return; }
+  const ranked = [...leads].sort((a, b) => computeMatch(b).finalScore - computeMatch(a).finalScore);
+  tbody.innerHTML = ranked.map((l, i) => {
     const m = computeMatch(l);
     const color = m.finalScore >= 70 ? 'var(--core)' : m.finalScore >= 40 ? 'var(--quiet)' : 'var(--indie)';
-    const chips = m.matched.map(t => `<span class="tag-chip tag-chip-on">${t}</span>`).join('') +
-                  m.unmatched.map(t => `<span class="tag-chip tag-chip-off">${t}</span>`).join('');
+    const meta = l.profileMatch ? PROFILE_META[l.profileMatch] : null;
+    const badge = meta
+      ? `<span class="profile-badge ${meta.cls}"><span class="badge-dot"></span>${l.profileMatch}</span>`
+      : `<span style="color:var(--muted2);font-size:11px">לא נותח</span>`;
     return `
-      <div class="match-row" onclick="openDrawer('${l.id}')">
-        <div class="match-head">
-          <strong style="font-size:13px">${l.name}</strong>
-          <span class="match-score" style="color:${color}">${m.finalScore}%</span>
-        </div>
-        <div class="match-track"><div class="match-fill" style="width:${m.finalScore}%;background:${color}"></div></div>
-        <div>${chips}</div>
-        <div class="budget-note">${m.budgetOk ? '✓' : '✕'} ${m.budgetOk ? `תואם תקציב (${l.budgetRangeMillion[0]}-${l.budgetRangeMillion[1]}M)` : `מתחת לטווח המחיר (${l.budgetRangeMillion[0]}-${l.budgetRangeMillion[1]}M)`}</div>
-      </div>`;
+      <tr onclick="openDrawer(${l._idx})">
+        <td><strong>${l.name}</strong><span class="name-hint">${l.tags.length} תגיות עומק</span></td>
+        <td style="color:var(--muted);font-size:12px">${l.householdType || '—'}</td>
+        <td>${badge}</td>
+        <td>
+          <span class="match-mini-track"><span class="match-mini-fill" style="width:${m.finalScore}%;background:${color}"></span></span>
+          <span class="match-pct" style="color:${color}">${m.finalScore}%</span>
+        </td>
+      </tr>`;
   }).join('');
 }
 
 let ringAnimTimer = null;
 
-function openDrawer(id) {
-  const lead = mockLeads.find(l => l.id === id);
+function openDrawer(idx) {
+  const lead = leads[idx];
   if (!lead) return;
 
   document.getElementById('drawerName').textContent = lead.name;
-  document.getElementById('drawerMeta').textContent = lead.householdType +
-    (lead.kidsAges.length ? ` · ילדים בגילאי ${lead.kidsAges.join(', ')}` : '');
+  document.getElementById('drawerMeta').textContent = lead.householdType || '';
 
-  // Ring: % of tags that are directly stated (certainty of this profile)
   const { score, tier } = computeCertainty(lead);
   const circ = 2 * Math.PI * 56;
   const rf = document.getElementById('ringFill');
@@ -337,10 +421,9 @@ function openDrawer(id) {
   rb.style.background = rc.bg;
   rb.style.color = rc.color;
 
-  // Axes — one row per tag; full bar = stated, partial bar = inferred
-  document.getElementById('drawerAxes').innerHTML = lead.tags.map(t => {
+  document.getElementById('drawerAxes').innerHTML = lead.tags.length ? lead.tags.map(t => {
     const stated = t.sourceType === 'stated';
-    const pct = stated ? 100 : 60;
+    const p = stated ? 100 : 60;
     const color = stated ? 'var(--core)' : 'var(--quiet)';
     return `
       <div class="bs-axis-row">
@@ -350,27 +433,25 @@ function openDrawer(id) {
             <span class="bs-axis-name">${t.tag}</span>
             <span class="bs-axis-val">${stated ? 'נאמר' : 'מוערך'}</span>
           </div>
-          <div class="bs-track"><div class="bs-fill" data-pct="${pct}" style="background:${color};width:0%"></div></div>
+          <div class="bs-track"><div class="bs-fill" data-pct="${p}" style="background:${color};width:0%"></div></div>
         </div>
       </div>`;
-  }).join('');
+  }).join('') : '<div class="empty-state">אין תגיות עומק עדיין</div>';
   setTimeout(() => {
     document.querySelectorAll('#drawerAxes [data-pct]').forEach(el => { el.style.width = el.dataset.pct + '%'; });
   }, 120);
 
-  // AI box — combined sales angles
-  document.getElementById('drawerAiBox').innerHTML = lead.tags.map(t => `• ${t.salesAngle}`).join('<br><br>');
+  document.getElementById('drawerAiBox').innerHTML = lead.tags.length ? lead.tags.map(t => `• ${t.salesAngle}`).join('<br><br>') : 'אין מספיק נתונים עדיין';
 
-  // Evidence list — same pattern as "תשובות מהשאלון"
-  document.getElementById('drawerEvidence').innerHTML =
-    `<div class="bs-slabel">מבוסס על</div>` +
-    lead.tags.map(t => `
+  document.getElementById('drawerEvidence').innerHTML = lead.tags.length
+    ? `<div class="bs-slabel">מבוסס על</div>` + lead.tags.map(t => `
       <div class="bs-ans-item">
         <div class="bs-ans-q">${t.tag}</div>
         <div class="bs-ans-a">${t.evidence}</div>
-      </div>`).join('');
+      </div>`).join('')
+    : '';
 
-  document.getElementById('drawerNotes').textContent = lead.notesForMatching;
+  document.getElementById('drawerNotes').textContent = lead.tags.map(t => t.tag).join(', ') || 'אין עדיין';
 
   document.getElementById('bsOverlay').classList.add('open');
   document.getElementById('bsPanel').classList.add('open');
@@ -381,8 +462,49 @@ function closeDrawer() {
   document.getElementById('bsPanel').classList.remove('open');
 }
 
-renderLeadsTable();
-renderProjectView();
+async function loadData() {
+  try {
+    const res = await fetch(API_URL + '?t=' + Date.now());
+    const raw = await res.json();
+
+    const FAKE_NAMES = ["da","dsfds","fsdfsd","test","טסט","בדיקה","sada","das"];
+    const families = raw.filter(r => {
+      if (typeof r !== 'object' || r === null) return false;
+      const name = (r['שם'] || '').toString().trim();
+      if (!name || name.length < 2) return false;
+      if (FAKE_NAMES.some(f => name.toLowerCase() === f.toLowerCase())) return false;
+      return true;
+    });
+
+    leads = families.map((f, i) => {
+      const readiness = getReadiness(f);
+      return {
+        _idx: i,
+        name: ((f['שם'] || '') + ' ' + (f['שם משפחה'] || '')).trim(),
+        householdType: (f['משק בית'] || '').toString().replace(/\n/g, ' ').trim(),
+        profileMatch: profileKey(f['פרופיל קהילתי']),
+        readinessStage: readiness.stage,
+        readinessTier: readiness.tier,
+        budgetMax: getBudgetMax(f),
+        tags: extractTags(f),
+      };
+    });
+
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('main').style.display = 'block';
+    document.getElementById('lastUpdated').textContent = 'עודכן ' + new Date().toLocaleTimeString('he-IL');
+
+    renderKPIs();
+    renderProfileBars();
+    renderProject();
+    renderLeadsTable();
+  } catch (err) {
+    document.getElementById('loading').innerHTML =
+      `<div style="color:#c0392b;text-align:center;padding:40px;font-size:14px">שגיאה בטעינת הלידים<br><small style="color:var(--muted2)">${err.message}</small></div>`;
+  }
+}
+
+loadData();
 </script>
 </body>
 </html>
