@@ -69,10 +69,13 @@
   .match-mini-track { width: 60px; height: 4px; background: var(--surface2); border-radius: 2px; overflow: hidden; display: inline-block; margin-inline-end: 8px; vertical-align: middle; }
   .match-mini-fill { height: 100%; border-radius: 2px; }
   .empty-state { color: var(--muted2); font-size: 13px; padding: 12px 0; }
+  .leads-table tr.row-active td { background: var(--core-bg) !important; }
+  .leads-table tr.row-contact-active td { background: var(--quiet-bg) !important; }
 
+  /* ── TAGS PANEL — left side, opens on double-click (same position as the live dashboard's bs-panel) ── */
   .bs-overlay { position:fixed;inset:0;background:rgba(26,24,20,0.3);z-index:200;display:none;backdrop-filter:blur(2px); }
   .bs-overlay.open { display:block; }
-  .bs-panel { position:fixed;top:64px;right:0;bottom:0;width:380px;background:var(--surface);border-left:1px solid var(--border);z-index:201;transform:translateX(100%);transition:transform .32s cubic-bezier(0.4,0,0.2,1);overflow-y:auto;direction:rtl; }
+  .bs-panel { position:fixed;top:64px;left:0;bottom:0;width:380px;background:var(--surface);border-right:1px solid var(--border);z-index:201;transform:translateX(-100%);transition:transform .32s cubic-bezier(0.4,0,0.2,1);overflow-y:auto;direction:rtl; }
   .bs-panel.open { transform:translateX(0); }
   .bs-ph { display:flex;align-items:center;justify-content:space-between;padding:20px 24px 16px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--surface);z-index:1; }
   .bs-ph-label { font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--core); }
@@ -95,11 +98,39 @@
   .bs-track { height:4px;background:var(--surface2);border-radius:99px;overflow:hidden; }
   .bs-fill { height:100%;border-radius:99px;transition:width .85s cubic-bezier(0.4,0,0.2,1); }
   .bs-divider { height:1px;background:var(--border);margin:18px 0; }
-  .bs-ai-box { background:var(--surface2);border-right:3px solid var(--core);border-radius:0 8px 8px 0;padding:12px 14px;font-size:12px;line-height:1.75;color:var(--muted); }
   .bs-ans-item { margin-bottom:9px;padding:9px 12px;background:var(--surface2);border-radius:7px; }
   .bs-ans-q { font-size:10px;font-weight:600;color:var(--muted2);margin-bottom:2px; }
   .bs-ans-a { font-size:12px;color:var(--text);line-height:1.5; }
-  .matching-note { border: 1px dashed var(--border); border-radius: 8px; padding: 12px 14px; margin-top: 18px; }
+
+  /* ── CONTACT PANEL — right side, opens on single click (same as the live dashboard's cd-panel) ── */
+  .cd-overlay { position:fixed;inset:0;background:rgba(26,24,20,0.3);z-index:200;display:none;backdrop-filter:blur(2px); }
+  .cd-overlay.open { display:block; }
+  .cd-panel { position:fixed;top:64px;right:0;bottom:0;width:340px;background:var(--surface);border-left:1px solid var(--border);z-index:201;transform:translateX(100%);transition:transform .32s cubic-bezier(0.4,0,0.2,1);overflow-y:auto;direction:rtl; }
+  .cd-panel.open { transform:translateX(0); }
+  .cd-header { display:flex;align-items:center;justify-content:space-between;padding:20px 24px 16px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--surface);z-index:1; }
+  .cd-header-label { font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--quiet); }
+  .cd-close { width:28px;height:28px;border-radius:50%;border:1px solid var(--border);background:var(--surface2);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;color:var(--muted); }
+  .cd-close:hover { background:var(--border); }
+  .cd-body { padding:24px; }
+  .cd-name { font-size:20px;font-weight:700;color:var(--text);margin-bottom:4px; }
+  .cd-profile-wrap { margin-bottom:24px; }
+  .cd-section-label { font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted2);margin-bottom:10px; }
+  .cd-fields { display:flex;flex-direction:column;gap:10px;margin-bottom:28px; }
+  .cd-field { display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:8px;background:var(--surface2);border:1px solid var(--border); }
+  .cd-field-icon { font-size:16px;flex-shrink:0;width:20px;text-align:center; }
+  .cd-field-body { flex:1;min-width:0; }
+  .cd-field-label { font-size:10px;color:var(--muted2);margin-bottom:1px; }
+  .cd-field-value { font-size:13px;color:var(--text);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+  .cd-field-empty { font-size:12px;color:var(--muted2);font-style:italic; }
+  .cd-actions { display:flex;flex-direction:column;gap:10px; }
+  .cd-btn { display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:13px 18px;border-radius:10px;border:none;font-family:'Heebo',sans-serif;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;transition:opacity 0.15s, transform 0.1s; }
+  .cd-btn:hover { opacity:0.88; transform:translateY(-1px); }
+  .cd-btn-whatsapp { background:#25D366;color:#fff; }
+  .cd-btn-phone { background:var(--text);color:#fff; }
+  .cd-btn-email { background:var(--surface2);color:var(--text);border:1px solid var(--border); }
+  .cd-btn-disabled { background:var(--surface2);color:var(--muted2);cursor:not-allowed;border:1px solid var(--border); }
+  .cd-btn-disabled:hover { opacity:1;transform:none; }
+  .name-hint2 { font-size: 10px; color: var(--muted2); font-weight: 400; display: block; margin-top: 4px; }
 </style>
 </head>
 <body>
@@ -155,7 +186,10 @@
   </div>
 
   <div class="card grid-full">
-    <div class="card-title">לידים</div>
+    <div class="card-title" style="display:flex;align-items:center;justify-content:space-between">
+      <span>לידים</span>
+      <span style="font-size:11px;color:var(--muted2);font-weight:400;text-transform:none;letter-spacing:0">לחיצה: פרטי קשר · לחיצה כפולה: תגיות עומק</span>
+    </div>
     <table class="leads-table">
       <thead><tr><th>שם</th><th>משק בית</th><th>פרופיל</th><th>התאמה לפרויקט</th></tr></thead>
       <tbody id="leadsBody"></tbody>
@@ -164,11 +198,12 @@
 
 </main>
 
-<div class="bs-overlay" id="bsOverlay" onclick="closeDrawer()"></div>
+<!-- TAGS PANEL (left, double-click) -->
+<div class="bs-overlay" id="bsOverlay" onclick="closeTagsPanel()"></div>
 <div class="bs-panel" id="bsPanel">
   <div class="bs-ph">
     <span class="bs-ph-label">תגיות עומק לשיחת מכירה</span>
-    <button class="bs-close" onclick="closeDrawer()">✕</button>
+    <button class="bs-close" onclick="closeTagsPanel()">✕</button>
   </div>
   <div class="bs-body">
     <p class="bs-name" id="drawerName"></p>
@@ -193,20 +228,32 @@
       <span class="bs-renewal-badge" id="readinessBadge"></span>
     </div>
 
-    <div class="bs-slabel">תגיות עומק</div>
+    <div class="bs-slabel">נושאים לשיחה</div>
     <div id="drawerAxes"></div>
 
     <div class="bs-divider"></div>
 
-    <div class="bs-slabel" style="margin-bottom:10px">תמצית לשיחת מכירה</div>
-    <div class="bs-ai-box" id="drawerAiBox"></div>
+    <div id="drawerEvidence"></div>
+  </div>
+</div>
 
-    <div style="margin-top:16px" id="drawerEvidence"></div>
+<!-- CONTACT PANEL (right, single click) -->
+<div class="cd-overlay" id="cdOverlay" onclick="closeContactPanel()"></div>
+<div class="cd-panel" id="cdPanel">
+  <div class="cd-header">
+    <span class="cd-header-label">פרטי קשר</span>
+    <button class="cd-close" onclick="closeContactPanel()">✕</button>
+  </div>
+  <div class="cd-body">
+    <p class="cd-name" id="cdName"></p>
+    <span class="name-hint2" id="cdHint"></span>
+    <div class="cd-profile-wrap" id="cdProfileWrap"></div>
 
-    <div class="matching-note">
-      <div class="bs-slabel" style="margin-bottom:6px">נשמר להתאמות עתידיות</div>
-      <div style="font-size:12px;color:var(--muted);line-height:1.6" id="drawerNotes"></div>
-    </div>
+    <div class="cd-section-label">מידע</div>
+    <div class="cd-fields" id="cdFields"></div>
+
+    <div class="cd-section-label">יצירת קשר</div>
+    <div class="cd-actions" id="cdActions"></div>
   </div>
 </div>
 
@@ -254,24 +301,24 @@ function extractTags(f) {
   const kidsAges = (f['גילאי ילדים'] || '').toString();
   Object.keys(EDU_TAG_MAP).forEach(key => {
     if (kidsAges.includes(key) && !kidsAges.includes('לאחר ' + key) && !kidsAges.includes('אחרי ' + key)) {
-      tags.push({ tag: EDU_TAG_MAP[key], sourceType: 'inferred', evidence: 'גילאי ילדים: ' + kidsAges.replace(/\n/g, ', '), salesAngle: 'רלוונטי למוסדות חינוך בשלב ' + key + ' בסביבת הפרויקט' });
+      tags.push({ tag: EDU_TAG_MAP[key], sourceType: 'inferred', evidence: 'גילאי ילדים: ' + kidsAges.replace(/\n/g, ', ') });
     }
   });
 
   const notWant = (f['מה הכי חשוב לכם שלא יקרה סביב הבית?'] || '').toString();
   if (notWant.includes('רעש')) {
-    tags.push({ tag: 'רגישות גבוהה לשקט', sourceType: 'stated', evidence: 'בחר/ה "' + notWant.split('\n')[0] + '" כמה שהכי לא רוצה שיקרה', salesAngle: 'אפשר להתמקד בדירות שקטות, רחוקות מרעש רחוב' });
+    tags.push({ tag: 'רגישות גבוהה לשקט', sourceType: 'stated', evidence: notWant.split('\n')[0] });
   }
   if (notWant.includes('ערכיים') || notWant.includes('פוליטיקה')) {
-    tags.push({ tag: 'רגישות להומוגניות חברתית', sourceType: 'stated', evidence: 'ציין/ה חשש מפערים ערכיים / פוליטיקה ורכילות', salesAngle: 'שווה להדגיש את פרופיל השכונה והאוכלוסייה בפרויקט' });
+    tags.push({ tag: 'רגישות להומוגניות חברתית', sourceType: 'stated', evidence: notWant.split('\n')[0] });
   }
 
   const amenities = (f['אילו מרחבים או שירותים חשובים לכם במיוחד?'] || '').toString();
   if (amenities.includes('אחסון')) {
-    tags.push({ tag: 'צורך באחסון', sourceType: 'stated', evidence: 'בחר/ה "חדרי אחסון / ציוד" כמרחב חשוב', salesAngle: 'שווה להדגיש מחסן צמוד אם קיים בפרויקט' });
+    tags.push({ tag: 'צורך באחסון', sourceType: 'stated', evidence: 'חדרי אחסון / ציוד' });
   }
   if (amenities.includes('עבודה')) {
-    tags.push({ tag: 'עבודה מהבית', sourceType: 'stated', evidence: 'בחר/ה "חלל עבודה משותף" כמרחב חשוב', salesAngle: 'שווה להדגיש חדר עבודה / חלל שקט בדירה' });
+    tags.push({ tag: 'עבודה מהבית', sourceType: 'stated', evidence: 'חלל עבודה משותף' });
   }
 
   return tags;
@@ -285,7 +332,6 @@ function getReadiness(f) {
   return { stage: v || 'לא צוין', tier };
 }
 
-// confirmed against real sheet: format is e.g. "2M- 3M", "3M- 4M", "4M- 5M"
 function getBudgetMax(f) {
   const raw = (f['מה התקציב העומד לרשותכם?'] || '').toString();
   if (!raw) return null;
@@ -294,6 +340,9 @@ function getBudgetMax(f) {
   if (!nums || !nums.length) return null;
   return Math.max(...nums.map(Number));
 }
+
+function formatPhone(raw) { if (!raw) return null; return raw.toString().replace(/[\s\-()]/g, ''); }
+function waLink(phone) { let p = formatPhone(phone); if (!p) return null; if (p.startsWith('0')) p = '972' + p.slice(1); return 'https://wa.me/' + p; }
 
 const projectMatchableTags = new Set(mockProject.attributes.flatMap(a => a.matchesLeadTags));
 
@@ -322,11 +371,9 @@ let leads = [];
 function renderKPIs() {
   document.getElementById('kpiTotal').textContent = leads.length;
   document.getElementById('kpiReady').textContent = leads.filter(l => l.readinessTier === 'high').length;
-
   const scores = leads.map(l => computeMatch(l).finalScore);
   document.getElementById('kpiMatch').textContent = scores.length ? Math.round(scores.reduce((s, v) => s + v, 0) / scores.length) + '%' : '—';
-
-  const certainties = leads.map(l => computeCertainty(l).score).filter(s => s > 0 || true);
+  const certainties = leads.map(l => computeCertainty(l).score);
   document.getElementById('kpiCertainty').textContent = leads.length ? Math.round(certainties.reduce((s, v) => s + v, 0) / leads.length) + '%' : '—';
 }
 
@@ -362,7 +409,7 @@ function renderLeadsTable() {
   const tbody = document.getElementById('leadsBody');
   if (!leads.length) { tbody.innerHTML = '<tr><td colspan="4"><div class="empty-state">אין לידים עדיין</div></td></tr>'; return; }
   const ranked = [...leads].sort((a, b) => computeMatch(b).finalScore - computeMatch(a).finalScore);
-  tbody.innerHTML = ranked.map((l, i) => {
+  tbody.innerHTML = ranked.map(l => {
     const m = computeMatch(l);
     const color = m.finalScore >= 70 ? 'var(--core)' : m.finalScore >= 40 ? 'var(--quiet)' : 'var(--indie)';
     const meta = l.profileMatch ? PROFILE_META[l.profileMatch] : null;
@@ -370,7 +417,7 @@ function renderLeadsTable() {
       ? `<span class="profile-badge ${meta.cls}"><span class="badge-dot"></span>${l.profileMatch}</span>`
       : `<span style="color:var(--muted2);font-size:11px">לא נותח</span>`;
     return `
-      <tr onclick="openDrawer(${l._idx})">
+      <tr data-idx="${l._idx}">
         <td><strong>${l.name}</strong><span class="name-hint">${l.tags.length} תגיות עומק</span></td>
         <td style="color:var(--muted);font-size:12px">${l.householdType || '—'}</td>
         <td>${badge}</td>
@@ -380,13 +427,40 @@ function renderLeadsTable() {
         </td>
       </tr>`;
   }).join('');
+  wireRowEvents();
+}
+
+function wireRowEvents() {
+  document.querySelectorAll('#leadsBody tr[data-idx]').forEach(tr => {
+    let timer = null;
+    tr.onclick = () => {
+      if (timer) return;
+      timer = setTimeout(() => {
+        timer = null;
+        closeTagsPanel();
+        openContactPanel(parseInt(tr.dataset.idx), tr);
+      }, 220);
+    };
+    tr.ondblclick = () => {
+      if (timer) { clearTimeout(timer); timer = null; }
+      closeContactPanel();
+      openTagsPanel(parseInt(tr.dataset.idx), tr);
+    };
+  });
+}
+
+function highlightRow(idx, cls) {
+  document.querySelectorAll('#leadsBody tr').forEach(r => r.classList.remove('row-active', 'row-contact-active'));
+  const row = document.querySelector(`#leadsBody tr[data-idx="${idx}"]`);
+  if (row) row.classList.add(cls);
 }
 
 let ringAnimTimer = null;
 
-function openDrawer(idx) {
+function openTagsPanel(idx) {
   const lead = leads[idx];
   if (!lead) return;
+  highlightRow(idx, 'row-active');
 
   document.getElementById('drawerName').textContent = lead.name;
   document.getElementById('drawerMeta').textContent = lead.householdType || '';
@@ -441,8 +515,6 @@ function openDrawer(idx) {
     document.querySelectorAll('#drawerAxes [data-pct]').forEach(el => { el.style.width = el.dataset.pct + '%'; });
   }, 120);
 
-  document.getElementById('drawerAiBox').innerHTML = lead.tags.length ? lead.tags.map(t => `• ${t.salesAngle}`).join('<br><br>') : 'אין מספיק נתונים עדיין';
-
   document.getElementById('drawerEvidence').innerHTML = lead.tags.length
     ? `<div class="bs-slabel">מבוסס על</div>` + lead.tags.map(t => `
       <div class="bs-ans-item">
@@ -451,15 +523,60 @@ function openDrawer(idx) {
       </div>`).join('')
     : '';
 
-  document.getElementById('drawerNotes').textContent = lead.tags.map(t => t.tag).join(', ') || 'אין עדיין';
-
   document.getElementById('bsOverlay').classList.add('open');
   document.getElementById('bsPanel').classList.add('open');
 }
 
-function closeDrawer() {
+function closeTagsPanel() {
   document.getElementById('bsOverlay').classList.remove('open');
   document.getElementById('bsPanel').classList.remove('open');
+}
+
+function openContactPanel(idx) {
+  const lead = leads[idx];
+  if (!lead) return;
+  highlightRow(idx, 'row-contact-active');
+
+  document.getElementById('cdName').textContent = lead.name;
+  document.getElementById('cdHint').textContent = lead.householdType || '';
+
+  const meta = lead.profileMatch ? PROFILE_META[lead.profileMatch] : null;
+  document.getElementById('cdProfileWrap').innerHTML = meta
+    ? `<span class="profile-badge ${meta.cls}"><span class="badge-dot"></span>${lead.profileMatch}</span>`
+    : '';
+
+  const fieldsEl = document.getElementById('cdFields');
+  fieldsEl.innerHTML = [
+    lead.phone
+      ? `<div class="cd-field"><span class="cd-field-icon">📞</span><div class="cd-field-body"><div class="cd-field-label">טלפון</div><div class="cd-field-value">${lead.phone}</div></div></div>`
+      : `<div class="cd-field"><span class="cd-field-icon">📞</span><div class="cd-field-body"><div class="cd-field-label">טלפון</div><div class="cd-field-empty">לא קיים</div></div></div>`,
+    lead.email
+      ? `<div class="cd-field"><span class="cd-field-icon">✉</span><div class="cd-field-body"><div class="cd-field-label">אימייל</div><div class="cd-field-value">${lead.email}</div></div></div>`
+      : '',
+    lead.readinessStage
+      ? `<div class="cd-field"><span class="cd-field-icon">📍</span><div class="cd-field-body"><div class="cd-field-label">שלב במעבר</div><div class="cd-field-value">${lead.readinessStage}</div></div></div>`
+      : '',
+  ].join('');
+
+  const wa = lead.phone ? waLink(lead.phone) : null;
+  const actionsEl = document.getElementById('cdActions');
+  actionsEl.innerHTML = '';
+  actionsEl.innerHTML += wa
+    ? `<a href="${wa}" target="_blank" class="cd-btn cd-btn-whatsapp"><span>💬</span> פתח וואטסאפ</a>`
+    : `<button class="cd-btn cd-btn-disabled" disabled><span>💬</span> וואטסאפ — אין מספר</button>`;
+  if (lead.phone) actionsEl.innerHTML += `<a href="tel:${formatPhone(lead.phone)}" class="cd-btn cd-btn-phone"><span>📞</span> חייג</a>`;
+  if (lead.email) {
+    const subj = encodeURIComponent('נגבה – פנייה אישית');
+    actionsEl.innerHTML += `<a href="mailto:${lead.email}?subject=${subj}" class="cd-btn cd-btn-email"><span>✉</span> שלח אימייל</a>`;
+  }
+
+  document.getElementById('cdOverlay').classList.add('open');
+  document.getElementById('cdPanel').classList.add('open');
+}
+
+function closeContactPanel() {
+  document.getElementById('cdOverlay').classList.remove('open');
+  document.getElementById('cdPanel').classList.remove('open');
 }
 
 async function loadData() {
@@ -486,6 +603,8 @@ async function loadData() {
         readinessStage: readiness.stage,
         readinessTier: readiness.tier,
         budgetMax: getBudgetMax(f),
+        phone: f['מספר טלפון'] || null,
+        email: f['email'] || null,
         tags: extractTags(f),
       };
     });
