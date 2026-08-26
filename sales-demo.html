@@ -531,11 +531,13 @@ function openTagsPanel(idx) {
 
   // Additional context sections — only rendered when the sheet actually has the data
   const extraSections = [
+    { label: 'תקציר AI', value: lead.aiSummary },
     { label: 'תקציב', value: lead.budgetRaw },
     { label: 'תחביבים רלוונטיים', value: lead.hobbies },
     { label: 'סוגיות משמעותיות בבחירת דירה', value: lead.apartmentConsiderations },
     { label: 'חששות', value: lead.concerns },
     { label: 'צרכים והזדמנויות', value: lead.opportunities },
+    { label: 'פרופיל קהילתי מלא', value: lead.communityProfileText },
   ].filter(sec => sec.value && sec.value.toString().trim());
 
   document.getElementById('drawerExtra').innerHTML = extraSections.map(sec => `
@@ -601,8 +603,11 @@ function closeContactPanel() {
 }
 
 async function loadData() {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 15000);
   try {
-    const res = await fetch(API_URL + '?t=' + Date.now());
+    const res = await fetch(API_URL + '?t=' + Date.now(), { signal: controller.signal });
+    clearTimeout(timeoutId);
     const raw = await res.json();
 
     const FAKE_NAMES = ["da","dsfds","fsdfsd","test","טסט","בדיקה","sada","das"];
@@ -629,6 +634,8 @@ async function loadData() {
         apartmentConsiderations: f['אילו מרחבים או שירותים חשובים לכם במיוחד?'] || null,
         concerns: f['נקודות חיכוך'] || null,
         opportunities: f['הזדמנויות'] || null,
+        aiSummary: f['סיכום AI'] || null,
+        communityProfileText: f['פרופיל קהילתי'] || null,
         phone: f['מספר טלפון'] || null,
         email: f['email'] || null,
         tags: extractTags(f),
@@ -644,8 +651,10 @@ async function loadData() {
     renderProject();
     renderLeadsTable();
   } catch (err) {
+    clearTimeout(timeoutId);
+    const msg = err.name === 'AbortError' ? 'הבקשה נתקעה מעל 15 שניות (timeout) — נסה לפתוח ב-GitHub Pages או להוריד את הקובץ למחשב' : err.message;
     document.getElementById('loading').innerHTML =
-      `<div style="color:#c0392b;text-align:center;padding:40px;font-size:14px">שגיאה בטעינת הלידים<br><small style="color:var(--muted2)">${err.message}</small></div>`;
+      `<div style="color:#c0392b;text-align:center;padding:40px;font-size:14px">שגיאה בטעינת הלידים<br><small style="color:var(--muted2)">${msg}</small></div>`;
   }
 }
 
