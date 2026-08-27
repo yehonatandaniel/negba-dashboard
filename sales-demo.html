@@ -260,6 +260,19 @@
 </div>
 
 <script>
+(function() {
+  const PASS = "037990678";
+  const KEY = "negba_auth";
+  if (sessionStorage.getItem(KEY) !== PASS) {
+    const entered = prompt("מודיעין קהילתי | נגבה\nהכנס סיסמה:");
+    if (entered !== PASS) {
+      document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:Heebo,sans-serif;font-size:16px;color:#8A8278">אין הרשאת גישה</div>';
+      throw new Error("Access denied");
+    }
+    sessionStorage.setItem(KEY, PASS);
+  }
+})();
+
 const API_URL = "https://script.google.com/macros/s/AKfycbyBCWYXQ5qx8i5bFoWdQLKne9bQoFDQM3FEJuhApiRVbtuSGN4OQ3xiEzxqxd3ZdiZJ/exec";
 
 const mockProject = {
