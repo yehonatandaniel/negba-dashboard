@@ -27,7 +27,7 @@
 
   main { padding: 36px 48px; max-width: 1360px; margin: 0 auto; display: none; }
 
-  .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 36px; }
+  .kpi-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 36px; }
   .kpi-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 22px 24px; }
   .kpi-label { font-size: 11px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
   .kpi-value { font-size: 42px; font-weight: 900; line-height: 1; color: var(--text); letter-spacing: -2px; }
@@ -68,6 +68,8 @@
   .match-pct { font-weight: 900; font-size: 15px; }
   .match-mini-track { width: 60px; height: 4px; background: var(--surface2); border-radius: 2px; overflow: hidden; display: inline-block; margin-inline-end: 8px; vertical-align: middle; }
   .match-mini-fill { height: 100%; border-radius: 2px; }
+  .match-reason { font-size: 10.5px; color: var(--muted2); margin-top: 4px; }
+  .hot-badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; background: var(--indie-bg); color: var(--indie); white-space: nowrap; }
   .empty-state { color: var(--muted2); font-size: 13px; padding: 12px 0; }
   .leads-table tr.row-active td { background: var(--core-bg) !important; }
   .leads-table tr.row-contact-active td { background: var(--quiet-bg) !important; }
@@ -166,11 +168,6 @@
       <div class="kpi-label">התאמה ממוצעת לפרויקט</div>
       <div class="kpi-value" id="kpiMatch">—</div>
       <div class="kpi-sub">הגדוד העברי</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-label">וודאות תגיות ממוצעת</div>
-      <div class="kpi-value" id="kpiCertainty">—</div>
-      <div class="kpi-sub">תגיות "נאמר" מתוך הכלל</div>
     </div>
   </div>
 
@@ -379,8 +376,6 @@ function renderKPIs() {
   document.getElementById('kpiReady').textContent = leads.filter(l => l.readinessTier === 'high').length;
   const scores = leads.map(l => computeMatch(l).finalScore);
   document.getElementById('kpiMatch').textContent = scores.length ? Math.round(scores.reduce((s, v) => s + v, 0) / scores.length) + '%' : '—';
-  const certainties = leads.map(l => computeCertainty(l).score);
-  document.getElementById('kpiCertainty').textContent = leads.length ? Math.round(certainties.reduce((s, v) => s + v, 0) / leads.length) + '%' : '—';
 }
 
 function renderProfileBars() {
@@ -422,14 +417,22 @@ function renderLeadsTable() {
     const badge = meta
       ? `<span class="profile-badge ${meta.cls}"><span class="badge-dot"></span>${l.profileMatch}</span>`
       : `<span style="color:var(--muted2);font-size:11px">לא נותח</span>`;
+    const hotBadge = m.finalScore >= 90
+      ? `<span class="hot-badge">🔥 התאמה מצוינת</span>` : '';
+    let reason = m.matched.length ? m.matched.join(' · ') : (l.tags.length ? 'אין חפיפה עם מאפייני הפרויקט' : 'אין תגיות עומק');
+    if (!m.budgetOk) reason += ' · חריגת תקציב';
     return `
       <tr data-idx="${l._idx}">
         <td><strong>${l.name}</strong><span class="name-hint">${l.tags.length} תגיות עומק</span></td>
         <td style="color:var(--muted);font-size:12px">${l.householdType || '—'}</td>
         <td>${badge}</td>
         <td>
-          <span class="match-mini-track"><span class="match-mini-fill" style="width:${m.finalScore}%;background:${color}"></span></span>
-          <span class="match-pct" style="color:${color}">${m.finalScore}%</span>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+            <span class="match-mini-track"><span class="match-mini-fill" style="width:${m.finalScore}%;background:${color}"></span></span>
+            <span class="match-pct" style="color:${color}">${m.finalScore}%</span>
+            ${hotBadge}
+          </div>
+          <div class="match-reason">${reason}</div>
         </td>
       </tr>`;
   }).join('');
